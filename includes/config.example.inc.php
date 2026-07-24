@@ -9,4 +9,14 @@ define("DB",[
 	"passwort" => "database_password",
 	"DBName" => "database_name",
 ]);
+
+// If TESTOPERATION is active, display all errors; otherwise, hide them.
+if(TESTOPERATION) {
+	error_reporting(E_ALL);
+	ini_set("display_errors",1);
+}
+else {
+	error_reporting(E_ALL);
+	ini_set("display_errors",0);
+}
 ?>
