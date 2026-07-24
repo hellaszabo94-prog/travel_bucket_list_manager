@@ -1,0 +1,8 @@
+.test {
+	background-color:#ffc;
+	border:1px solid orange;
+	margin:0.5em 0;
+	padding:0.5em;
+	font-family:"Courier New", monospace;
+	font-size:0.8rem;
+}
