@@ -2,7 +2,7 @@
 //create a constant to the TESTOPERATION turn in or turn of
 define("TESTOPERATION",true); 
 
-// Stores database settings in an associative array constant.
+// stores database settings in an associative array constant.
 define("DB",[
 	"hostadresse" => "localhost",
 	"username" => "database_username",
@@ -10,7 +10,7 @@ define("DB",[
 	"DBName" => "database_name",
 ]);
 
-// If TESTOPERATION is active, display all errors; otherwise, hide them.
+// if TESTOPERATION is active, display all errors; otherwise, hide them.
 if(TESTOPERATION) {
 	error_reporting(E_ALL);
 	ini_set("display_errors",1);
