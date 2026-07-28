@@ -47,9 +47,9 @@ if(count($_POST)>0){
                     VALUES (
                         '" . $conn->real_escape_string($_POST["E"]) . "',
                         '" . password_hash($pwd,PASSWORD_DEFAULT) . "',
-                        " . trim($firstN) . ",
-                        " . trim($lastN) . ",
-                        " . trim($birth) . "    
+                        '" . trim($firstN) . "',
+                        '" . trim($lastN) . "',
+                        '" . trim($birth) . "'    
                     )
                 ";
 
@@ -58,7 +58,7 @@ if(count($_POST)>0){
                 $ok = dbQuery($conn,$sql);
 
                 if($ok){
-                    $msg='<p class="success"> Thank you! You are registered.</p>';
+                    $msg='<p class="success"> Thank you! You are registered. Now try to log in.</p>';
                 }
             }
             else{
@@ -77,7 +77,7 @@ if(count($_POST)>0){
 // log in buttton further on the log.php
 
 
-if(isset($_POST["Log in"])){
+if(isset($_POST["logButton"])){
     
     header("Location: log.php");
 }

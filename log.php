@@ -10,7 +10,7 @@ test($_POST);
 $msg="";
 
 
-if(isset($_POST["Log in"])>0){
+if(isset($_POST["logButton"])>0){
 
     $logemail=trim($_POST["E"]);
 
@@ -23,7 +23,7 @@ if(isset($_POST["Log in"])>0){
 		)
 	";
 
-	test($sql);
+	//test($sql);
 
 	$userlist = dbQuery($conn,$sql);
 
@@ -61,8 +61,9 @@ if(isset($_POST["regButton"])){
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1>Travel Bucket List ManagerTravel Bucket List Manager</h1>
+    <h1>Travel Bucket List Manager</h1>
     <h2>Log in</h2>
+    <?php echo($msg);?>
     <form method="post">
         <label>
             Email adresse:

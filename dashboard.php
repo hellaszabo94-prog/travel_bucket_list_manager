@@ -10,7 +10,7 @@ test($_SESSION["Emailadress"]);
 
 if(count($_POST)>0){
 
-    if(isset($_POST["Log out"])){
+    if(isset($_POST["Logout"])){
 
         $_SESSION=[];
     
@@ -44,7 +44,7 @@ if(!(isset($_SESSION["succesLogIn"]) && $_SESSION["succesLogIn"]===true)){
     </head>
     <body>
     <h1>Travel Bucket List Manager</h1>
-    <h2>Welcome to your personal Travel Bucket List Manager, <?php echo($_SESSION["Emailadress"])?> !</h2>
+    <h2>Welcome to your personal Travel Bucket List Manager, <?php echo($_SESSION["Emailadress"])?>!</h2>
     <form method="post">
         <input type="submit" value="Log out" name="Logout">
     </form>
