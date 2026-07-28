@@ -18,7 +18,7 @@ if(isset($_POST["logButton"])){
 }
 ?>
 <!doctype html>
-<html lang="de">
+<html lang="en">
     <head>
         <title>Start</title>
         <meta charset="utf-8">
@@ -26,10 +26,10 @@ if(isset($_POST["logButton"])){
     </head>
     <body>
     <h1>Travel Bucket List Manager</h1>
-    <h2>Willkommen! Melden Sie sich an oder registrieren Sie sich.</h2>
+    <h2>Welcome! Log in or sign up.</h2>
     <form method="post">
-        <input type="submit" value="Login" name="logButton">
-        <input type="submit" value="Registrierung" name="regButton">
+        <input type="submit" value="Log in" name="logButton">
+        <input type="submit" value="Sign up" name="regButton">
     </form>
     </body>
 </html>

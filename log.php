@@ -1,3 +1,11 @@
+<?php
+require("includes/config.inc.php");
+require("includes/common.inc.php");
+require("includes/db.inc.php");
+
+?>
+
+
 <!doctype html>
 <html lang="de">
     <head>
