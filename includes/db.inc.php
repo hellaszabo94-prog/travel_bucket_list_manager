@@ -47,7 +47,7 @@ function dbFetch(mysqli_result $answer):object|null {
 
 // prepares text data for SQL statements
 
-function checkIstItEmpty(string $incomeing):string {
+function checkIsItEmpty(string $incomeing):string {
 
 	if(strlen($incoming)>0) {
 		$out = "'" . $incomeing . "'";
