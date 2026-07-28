@@ -3,21 +3,69 @@ require("includes/config.inc.php");
 require("includes/common.inc.php");
 require("includes/db.inc.php");
 
+$conn = dbConnect();
+
+test($_POST);
+
+$msg="";
+
+
+if(isset($_POST["Log in"])>0){
+
+    $logemail=trim($_POST["E"]);
+
+	$sql = "
+		SELECT
+			*
+		FROM tbl_user
+		WHERE(
+			Emailaddress='" . $conn->real_escape_string($logemail) . "'
+		)
+	";
+
+	test($sql);
+
+	$userlist = dbQuery($conn,$sql);
+
+	test($userlist);
+
+    $user = dbFetch($userlist);
+
+	if(password_verify($_POST["PWD"],$user->Password)) {
+
+            session_start();
+
+            $_SESSION["succesLogIn"] = true;
+            $_SESSION["Emailadress"] = $logemail;
+
+            header("Location: dashboard.php");
+    }
+    else{
+        $msg='<p class="error">Something went wrong. Please try again.</p>';
+    }
+              
+}
+   
+if(isset($_POST["regButton"])){
+
+    header("Location: reg.php");
+}
+
 ?>
 
-
 <!doctype html>
-<html lang="de">
+<html lang="en">
     <head>
         <title>Login</title>
         <meta charset="utf_8">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1>Meinen Reisemanager</h1>
+    <h1>Travel Bucket List ManagerTravel Bucket List Manager</h1>
+    <h2>Log in</h2>
     <form method="post">
         <label>
-            Emailadresse:
+            Email adresse:
             <input type="email" name="E">
         </label>
         <label>
@@ -25,8 +73,8 @@ require("includes/db.inc.php");
             <input type="password" name="PWD">
         </label>
         <br>
-        <input type="submit" value="Login" name="logButton">
-        <input type="submit" value="Registrierung" name="regButton">
+        <input type="submit" value="Log in" name="logButton">
+        <input type="submit" value="Sign up" name="regButton">
     </form>
     </body>
 </html>

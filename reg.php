@@ -93,7 +93,7 @@ if(isset($_POST["Log in"])){
     <body>
     <h1>Travel Bucket List Manager</h1>
     <h2>Sing up</h2>
-    
+    <?php echo($msg);?>
     <form method="post">
         <fieldset>
             <label>
