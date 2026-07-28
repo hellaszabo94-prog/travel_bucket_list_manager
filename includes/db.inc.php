@@ -24,7 +24,7 @@ function dbConnect():mysqli {
 
 function dbQuery(mysqli $conn, string $sql):mysqli_result|bool {
 	try {
-		$antwort = $conn->query($sql);
+		$answer = $conn->query($sql);
 	}
 	catch(Exception $e) {
 		if(TESTOPERATION) {
@@ -36,8 +36,26 @@ function dbQuery(mysqli $conn, string $sql):mysqli_result|bool {
 		}
 	}
 	
-	return $antwort;
+	return $answer;
 }
 
+// fetching the query result
+
+function dbFetch(mysqli_result $answer):object|null {
+
+	return $answer->fetch_object(); 
+
+// prepares text data for SQL statements
+
+function checkIstItEmpty(string $incomeing):string {
+
+	if(strlen($incoming)>0) {
+		$out = "'" . $incomeing . "'";
+	}
+	else {
+		$out = "NULL";
+	}
+	return $out;
+}
 
 ?>
