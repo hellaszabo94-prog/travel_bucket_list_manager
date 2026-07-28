@@ -3,61 +3,126 @@ require("includes/config.inc.php");
 require("includes/common.inc.php");
 require("includes/db.inc.php");
 
+$conn = dbConnect();
+
+test($_POST);
+
+$msg ="";
+
+if(count($_POST)>0){
+
+    $email=trim($_POST["E"]);
+
+    $sql = "
+        SELECT
+           COUNT(*) AS cnt
+        FROM tbl_user
+        WHERE(
+            Emailaddress='" . $conn->real_escape_string($email). "'
+        )
+    ";
+
+    test($sql);
+
+    $dates = dbQuery($conn,$sql);
+
+    test($dates);
+
+    $newdates=dbFetch($dates);
+
+    if($newdates->cnt==0){
+
+        $pwd = trim($_POST["PWD"]);
+		$pwd2 = trim($_POST["PWD2"]);
+
+        if($pwd==$pwd2){
+
+            if(strlen($pwd)>=8){
+                $firstN=$conn->real_escape_string($_POST["FirstN"]);
+                $lastN=$conn->real_escape_string($_POST["LastN"]);
+                $birth=$conn->real_escape_string($_POST["Birth"]);
+                $sql="
+                    INSERT INTO tbl_user
+                        (Emailaddress, Password, Firstname, Lastname, Birthdate)
+                    VALUES (
+                        '" . $conn->real_escape_string($_POST["E"]) . "',
+                        '" . password_hash($pwd,PASSWORD_DEFAULT) . "',
+                        " . trim($firstN) . ",
+                        " . trim($lastN) . ",
+                        " . trim($birth) . "    
+                    )
+                ";
+
+                test($sql);
+
+                $ok = dbQuery($conn,$sql);
+
+                if($ok){
+                    $msg='<p class="success"> Thank you! You are registered.</p>';
+                }
+            }
+            else{
+                $msg='<p class="error"> Password is too short.</p>';
+            }
+        }
+        else{
+            $msg='<p class="error"> Passwords do not match.</p>';
+        } 
+    }   
+    else {
+        $msg = '<p class="error">This email address is already registered. Please log in.</p>';
+    }    
+}
+
+// log in buttton further on the log.php
+
+
+if(isset($_POST["Log in"])){
+    
+    header("Location: log.php");
+}
+
 ?>
 <!doctype html>
-<html lang="de">
+<html lang="en">
     <head>
-        <title>Registrirung</title>
+        <title>Sing up</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1>Meinen Reisemanager</h1>
-    <h2>Registrierung</h2>
+    <h1>Travel Bucket List Manager</h1>
+    <h2>Sing up</h2>
     
     <form method="post">
         <fieldset>
-            <legend>Pflichtdaten</legend>
             <label>
-                Emailadresse:
+                Email adresse:
                 <input type="email" name="E">
             </label>
-            <br>
-            <br>
             <label>
-                Password (bitte mindestens acht Zeihnen):
+                Password :
                 <input type="password" name="PWD">
             </label>
-            <br>
-            <br>
             <label>
                 Password 2:
                 <input type="password" name="PWD2">
             </label>
-        </fieldset>
-        <br>
-        <fieldset>
-            <legend>Weitere Daten</legend>
             <label>
-                Vorname:
-                <input type="text" name="VorN">
+                First name:
+                <input type="text" name="FirstN">
             </label>
-            <br>
-            <br>
             <label>
-                Nachname:
-                <input type="text" name="NachN" >
+                Last name:
+                <input type="text" name="LastN" >
             </label>
-            <br>
-            <br>
             <label>
-                Geburtsdatum:
-                <input type="date" name="GebD">
+                Birth date:
+                <input type="date" name="Birth">
             </label>
         </fieldset>
-        <br>
-        <input type="submit" value="Registrierung" name="regButton">
-        <input type="submit" value="Login" name="logButton">
+        <input type="submit" value="Log in" name="logButton">
+        <input type="submit" value="Sign up" name="regButton">
     </form>
     </body>
 </html>

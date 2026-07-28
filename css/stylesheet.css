@@ -6,3 +6,15 @@
 	font-family:"Courier New", monospace;
 	font-size:0.8rem;
 }
+.success {
+	margin:0.5em 0;
+	padding:0.2em;
+	border-left:10px solid rgb(0, 255, 76);
+	font-style:italic;
+}
+.error {
+	margin:0.5em 0;
+	padding:0.2em;
+	border-left:3px solid red;
+	font-weight:bold;
+}

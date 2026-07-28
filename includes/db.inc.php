@@ -4,7 +4,7 @@
 
 function dbConnect():mysqli {
 	try {
-		$conn = new mysqli(DB["hostadresse"],DB["username"],DB["passwort"],DB["DBName"]);
+		$conn_int = new mysqli(DB["hostadresse"],DB["username"],DB["passwort"],DB["DBName"]);
 	}
 	catch(Exception $e) {
 		if(TESTOPERATION) {
@@ -17,14 +17,14 @@ function dbConnect():mysqli {
 		}
 	}
 	
-	return $conn;
+	return $conn_int;
 }
 
 // query from database
 
-function dbQuery(mysqli $conn, string $sql):mysqli_result|bool {
+function dbQuery(mysqli $conn_int, string $sql_int):mysqli_result|bool {
 	try {
-		$answer = $conn->query($sql);
+		$answer_int = $conn_int->query($sql_int);
 	}
 	catch(Exception $e) {
 		if(TESTOPERATION) {
@@ -33,29 +33,17 @@ function dbQuery(mysqli $conn, string $sql):mysqli_result|bool {
 		}
 		else {
 			header("Location: errors/dbquery.html");
+            exit;
 		}
 	}
 	
-	return $answer;
+	return $answer_int;
 }
 
 // fetching the query result
 
-function dbFetch(mysqli_result $answer):object|null {
+function dbFetch(mysqli_result $answer_int):object|null {
 
-	return $answer->fetch_object(); 
-
-// prepares text data for SQL statements
-
-function checkIsItEmpty(string $incomeing):string {
-
-	if(strlen($incoming)>0) {
-		$out = "'" . $incomeing . "'";
-	}
-	else {
-		$out = "NULL";
-	}
-	return $out;
+	return $answer_int->fetch_object(); 
 }
-
 ?>
