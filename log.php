@@ -31,17 +31,19 @@ if(isset($_POST["logButton"])>0){
 
     $user = dbFetch($userlist);
 
-	if(password_verify($_POST["PWD"],$user->Password)) {
+	if($user && password_verify($_POST["PWD"],$user->Password)) {
 
             session_start();
+            session_regenerate_id(true);
 
             $_SESSION["succesLogIn"] = true;
             $_SESSION["Emailadress"] = $logemail;
 
             header("Location: dashboard.php");
+            exit;
     }
     else{
-        $msg='<p class="error">Something went wrong. Please try again.</p>';
+        $msg='<p class="error">Invalid email or password.</p>';
     }
               
 }
