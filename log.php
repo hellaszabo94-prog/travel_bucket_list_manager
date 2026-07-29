@@ -36,7 +36,8 @@ if(isset($_POST["logButton"])>0){
             session_start();
             session_regenerate_id(true);
 
-            $_SESSION["succesLogIn"] = true;
+            $_SESSION["successLogin"] = true;
+            $_SESSION["userID"] = $user->IDUser;
             $_SESSION["Emailadress"] = $logemail;
 
             header("Location: dashboard.php");
