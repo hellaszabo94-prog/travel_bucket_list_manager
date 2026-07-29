@@ -1,17 +1,7 @@
 <?php
 require ("includes/common.inc.php");
 require ("includes/config.inc.php");
-
-test($_POST);
-
-session_start();
-
-test($_SESSION["Emailadress"]);
-
-
-if(!(isset($_SESSION["successLogin"]) && $_SESSION["successLogin"]===true)){
-    header("Location: log.php");
-}
+require ("includes/auth.inc.php");
 
 ?>
 
@@ -26,9 +16,6 @@ if(!(isset($_SESSION["successLogin"]) && $_SESSION["successLogin"]===true)){
     <h1>Travel Bucket List Manager</h1>
     <h2>Welcome to your personal Travel Bucket List Manager, 
         <?= htmlspecialchars($_SESSION["Emailadress"], ENT_QUOTES, "UTF-8") ?>!</h2>
-    <form method="post">
-        <input type="submit" value="Log out" name="Logout">
-    </form>
     <nav>
 		<ul>
 	    	<li><a href="">Suchen</a></li>
