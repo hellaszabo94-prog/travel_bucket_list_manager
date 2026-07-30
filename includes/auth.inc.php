@@ -5,8 +5,6 @@ test($_POST);
 
 session_start();
 
-test($_SESSION["Emailadress"]);
-
 // check if the user is actually logged in
 
 if(!(isset($_SESSION["successLogin"]) && $_SESSION["successLogin"]===true)){
