@@ -1,18 +1,22 @@
 <?php
+// load configuration, helper and database functions
 require("includes/config.inc.php");
 require("includes/common.inc.php");
 require("includes/db.inc.php");
 
+// connect to the database
 $conn = dbConnect();
 
 test($_POST);
 
 $msg="";
 
-
+// run login process after clicking the login button
 if(isset($_POST["logButton"])>0){
 
     $logemail=trim($_POST["E"]);
+
+    // search for the user by email address
 
 	$sql = "
 		SELECT
@@ -29,17 +33,22 @@ if(isset($_POST["logButton"])>0){
 
 	test($userlist);
 
+    // get the user data from the query result
     $user = dbFetch($userlist);
 
+    // check if the user exists and the password is correct
 	if($user && password_verify($_POST["PWD"],$user->Password)) {
 
+            // start the session and create a new session ID
             session_start();
             session_regenerate_id(true);
 
+            // save the logged-in user's data in the session
             $_SESSION["successLogin"] = true;
             $_SESSION["userID"] = $user->IDUser;
             $_SESSION["Emailadress"] = $logemail;
 
+            // redirect the user to the dashboard
             header("Location: dashboard.php");
             exit;
     }
@@ -48,7 +57,8 @@ if(isset($_POST["logButton"])>0){
     }
               
 }
-   
+
+// redirect to the registration page
 if(isset($_POST["regButton"])){
 
     header("Location: reg.php");
