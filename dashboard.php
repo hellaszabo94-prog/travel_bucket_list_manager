@@ -1,4 +1,5 @@
 <?php
+// load configuration, helper functions and authentication
 require ("includes/common.inc.php");
 require ("includes/config.inc.php");
 require ("includes/auth.inc.php");
