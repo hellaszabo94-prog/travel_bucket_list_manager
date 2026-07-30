@@ -1,17 +1,22 @@
 <?php
+// load configuration, helper functions and database functions
 require("includes/config.inc.php");
 require("includes/common.inc.php");
 require("includes/db.inc.php");
 
+// create database connection
 $conn = dbConnect();
 
 test($_POST);
 
 $msg ="";
 
+// registration process after email control
 if(count($_POST)>0){
 
     $email=trim($_POST["E"]);
+
+    // check the email address is already registered
 
     $sql = "
         SELECT
@@ -30,17 +35,27 @@ if(count($_POST)>0){
 
     $newdates=dbFetch($dates);
 
+    // continue registration if email address does not exist
+
     if($newdates->cnt==0){
 
         $pwd = trim($_POST["PWD"]);
 		$pwd2 = trim($_POST["PWD2"]);
 
+        // check both password fields are same 
+
         if($pwd==$pwd2){
 
+            // password has to be 8 characters
+
             if(strlen($pwd)>=8){
+
                 $firstN=$conn->real_escape_string($_POST["FirstN"]);
                 $lastN=$conn->real_escape_string($_POST["LastN"]);
                 $birth=$conn->real_escape_string($_POST["Birth"]);
+
+                // insert the new user 
+
                 $sql="
                     INSERT INTO tbl_user
                         (Emailaddress, Password, Firstname, Lastname, Birthdate)
@@ -56,6 +71,8 @@ if(count($_POST)>0){
                 test($sql);
 
                 $ok = dbQuery($conn,$sql);
+
+                // display a confirmation message after successful registration
 
                 if($ok){
                     $msg='<p class="success"> Thank you! You are registered. Now try to log in.</p>';
