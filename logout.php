@@ -1,28 +1,32 @@
 <?php 
-if(count($_POST)>0){
-
+    // check if the logout button was clicked
     if(isset($_POST["Logout"])){
 
+        // remove all data stored in the session
         $_SESSION=[];
-    
-    if(ini_get("session.use_cookies")){
-        $parameter = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time()-86400,
-            $parameter["path"],
-            $parameter["domain"],
-            $parameter["secure"],
-            $parameter["httponly"],
-        );
-    }  
-    session_destroy();
 
-    header("Location: log.php");
+        // remove the session cookie if cookies are used
+        if(ini_get("session.use_cookies")){
 
-    exit;
+            $parameter = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                '',
+                time()-86400,
+                $parameter["path"],
+                $parameter["domain"],
+                $parameter["secure"],
+                $parameter["httponly"],
+            );
+        }  
+         // destroy the session completely
+        session_destroy();
+
+         // redirect the user to the login page
+        header("Location: log.php");
+
+        exit;
     }
-}
 
 ?>
