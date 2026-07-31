@@ -39,8 +39,7 @@ require ("includes/auth.inc.php");
 
                     // check the country already exists in the database
                     $sql = "
-                    SELECT
-                        IDCountry
+                    SELECT IDCountry
                     FROM tbl_country
                     WHERE(
                         CountryName='" . $countryfield . "'
@@ -81,6 +80,57 @@ require ("includes/auth.inc.php");
         ?>   
         <label for="city">City:</label>
         <input type="text" id="city" name="city" required>
+         <?php
+                if(isset($_POST["city"]) && trim($_POST["city"]) !== ""){
+
+                    $cityfield = $conn->real_escape_string(trim($_POST["city"]));
+
+                    // check the city already exists in the selected country
+
+                    $sql = "
+                    SELECT IDCity
+                    FROM tbl_city
+                    WHERE(
+                        CityName ='" . $cityfield . "'
+                        AND FIDCountry = " . $countryID . "
+
+                    )
+                    ";
+
+                    $cityResult = dbQuery($conn,$sql);
+
+                    // if the city does not exist, create a new
+
+                    if($cityResult->num_rows===0){
+
+                        $sql="
+                                INSERT INTO tbl_city
+                                    (CityName, FIDCountry )
+                                VALUES (
+                                '" . $cityfield . "',
+                                " . $countryID . " 
+                                )
+                        ";
+
+                        $cityOk = dbQuery($conn,$sql);
+
+                        if($cityOk){
+                            // saves the ID of the newly created city
+                            $cityID = $conn->insert_id;
+
+                            echo($msg='<p class="success"> City saved.</p>');
+                        }
+                    }
+                    else{
+                        // if the city already exists, get its ID from the database
+                        
+                        $city = dbFetch($cityResult);
+                         
+                        $cityID = $city->IDCity;
+                        
+                    }
+                }
+             ?>   
 
         <label for="destination">Destination:</label>
         <input type="text" id="destination" name="destination" required>
