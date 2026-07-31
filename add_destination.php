@@ -29,7 +29,56 @@ require ("includes/auth.inc.php");
     <form method="post">
         <label for="country">Country:</label>
         <input type="text" id="country" name="country" required>
+        <?php
 
+            // check the country field exists and is not empty.
+            if(isset($_POST["country"]) && trim($_POST["country"]) !== ""){
+
+                    // remove unnecessary spaces and escapes special characters
+                    $countryfield = $conn->real_escape_string(trim($_POST["country"]));
+
+                    // check the country already exists in the database
+                    $sql = "
+                    SELECT
+                        IDCountry
+                    FROM tbl_country
+                    WHERE(
+                        CountryName='" . $countryfield . "'
+                    )
+                    ";
+
+                    $countryResult = dbQuery($conn,$sql);
+
+                    // if the country does not exist, create a new
+                    if($countryResult->num_rows===0){
+
+                        $sql="
+                                INSERT INTO tbl_country
+                                    (CountryName)
+                                VALUES (
+                                '" . $countryfield . "'
+                                )
+                        ";
+                        
+                        $countryOk = dbQuery($conn,$sql);
+
+                        if($countryOk){
+                            // save the ID of the newly created country
+                            $countryID = $conn->insert_id;
+
+                            echo($msg='<p class="success">Country saved.</p>');
+
+                        }
+                    
+                    }
+                    else{
+                        // if the country already exists, get ID from the database.
+                        $country = dbFetch($countryResult);
+
+                        $countryID = $country->IDCountry;
+                    }
+            }
+        ?>   
         <label for="city">City:</label>
         <input type="text" id="city" name="city" required>
 
