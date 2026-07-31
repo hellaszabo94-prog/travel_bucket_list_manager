@@ -5,6 +5,8 @@ require ("includes/config.inc.php");
 require ("includes/db.inc.php");
 require ("includes/auth.inc.php");
 
+$conn = dbConnect();
+
 ?>
 
 <!doctype html>
@@ -127,14 +129,14 @@ require ("includes/auth.inc.php");
                         $city = dbFetch($cityResult);
                          
                         $cityID = $city->IDCity;
-                        
+
                     }
                 }
              ?>   
 
         <label for="destination">Destination:</label>
         <input type="text" id="destination" name="destination" required>
-
+   
         <label for="status">Status:</label>
         <select id="status" name="status" required>
             <option value="">Choose status</option>
@@ -145,10 +147,52 @@ require ("includes/auth.inc.php");
 
         <label for="description">Description:</label>
         <textarea id="description" name="description"></textarea>
+              <?php
+                if(isset($_POST["destination"]) && trim($_POST["destination"]) !== ""){
 
-        <button type="submit" name="saveDestination">
-            Save destination
-        </button>
+                    $destinationfield =$conn->real_escape_string(trim($_POST["destination"]));
+                    $descriptionfield = $conn->real_escape_string($_POST["description"]);
+                    $statusfield = ;
+                    $userID = (int) $_SESSION["userID"];
+                    
+                    $sql = "
+                    SELECT IDDestination
+                    FROM tbl_destination
+                    WHERE(
+                        DestinationName ='" . $destinationfield . "'
+                        AND FIDCity = " . $cityID . "
+                    )
+                    ";
+
+                    $destinationResult = dbQuery($conn,$sql);
+
+                    if($destinationResult->num_rows==0){
+
+                        $sql="
+                                INSERT INTO tbl_destination
+                                    (DestinationName, Description, FIDCity, FIDStatus, FIDUser)
+                                VALUES (
+                                '" . $destinationfield . "',
+                                '" . $descriptionfield . "',
+                                '" . $cityID . "',
+                                '" . $statusfield . "',
+                                '" . $userID . "',
+                                )
+                        ";
+
+                        $destinationOk = dbQuery($conn,$sql);
+
+                        if($destinationOk){
+                            echo($msg='<p class="success"> Destination saved.</p>');
+                        }
+                    
+                    }
+                    else{
+                        echo($msg='<p class="error"> Destination already exists in the system.</p>');
+                    }
+                }
+             ?>  
+        <button type="submit" name="saveDestination">Save destination</button>
 
 </form>
 
