@@ -1,8 +1,8 @@
 <?php
 // load configuration, helper and database functions
-require("includes/config.inc.php");
-require("includes/common.inc.php");
-require("includes/db.inc.php");
+require ("includes/config.inc.php");
+require ("includes/common.inc.php");
+require ("includes/db.inc.php");
 
 // connect to the database
 $conn = dbConnect();
