@@ -21,7 +21,7 @@ require ("includes/auth.inc.php");
 		<ul>
 	    	<li><a href="">Suchen</a></li>
 			<li><a href="add_destination.php">Add a new destination</a></li>
-			<li><a href="">Reiseziel Status ändern</a></li>
+			<li><a href="my_destinations.php">My Destinations</a></li>
             <li><a href="">Fotos hochladen</a></li>
             <li><a href="logout.php">Log out</a></li>
 		</ul>
