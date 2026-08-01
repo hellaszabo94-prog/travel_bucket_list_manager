@@ -160,6 +160,8 @@ $msg="";
                             <label>' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
                 }
 
+                $statusID = null;
+
                 // shows an error if no status was selected
                 if (!isset($_POST["typeOfStatus"])) {
 
@@ -174,14 +176,16 @@ $msg="";
         <label for="description">Description:</label>
         <textarea id="description" name="description"></textarea>
               <?php
-                if(isset($_POST["destination"]) && trim($_POST["destination"]) !== ""){
+                // checks the destination field exists and is not empty
 
+                if(isset($_POST["destination"]) && trim($_POST["destination"]) !== "" && $statusID !== null){
+                    // prepares the optional description for the SQL query
                     $destinationfield =$conn->real_escape_string(trim($_POST["destination"]));
 
                     $descriptionfield = $conn->real_escape_string($_POST["description"]);
-                    
+                    // gets the currently logged-in user's ID from the session
                     $userID = (int) $_SESSION["userID"];
-                    
+                    // checks the destination is already saved by the current user
                     $sql = "
                     SELECT IDDestination
                     FROM tbl_destination
@@ -194,8 +198,10 @@ $msg="";
 
                     $destinationResult = dbQuery($conn,$sql);
 
+                     // creates the destination if it is not already exist
                     if($destinationResult->num_rows==0){
 
+                        // saves the destination
                         $sql="
                                 INSERT INTO tbl_destination
                                     (DestinationName, Description, FIDCity, FIDStatus, FIDUser)
@@ -211,6 +217,9 @@ $msg="";
                         $destinationOk = dbQuery($conn,$sql);
 
                         if($destinationOk){
+                            // saves the ID of the newly created destination
+                            $destinationID = $conn->insert_id;
+
                             echo($msg='<p class="success"> Destination saved.</p>');
                         }
                     
