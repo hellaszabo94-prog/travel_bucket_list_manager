@@ -7,6 +7,8 @@ require ("includes/auth.inc.php");
 
 $conn = dbConnect();
 
+$msg="";
+
 ?>
 
 <!doctype html>
@@ -138,21 +140,46 @@ $conn = dbConnect();
         <input type="text" id="destination" name="destination" required>
    
         <label for="status">Status:</label>
-        <select id="status" name="status" required>
-            <option value="">Choose status</option>
-            <option value="1">Want to visit</option>
-            <option value="2">Planned</option>
-            <option value="3">Visited</option>
-        </select>
+           <?php
+                // loads all available statuses from the database
 
+                $sql="
+                    SELECT
+                        IDStatus,
+                        StatusName
+                    FROM tbl_status
+                    ORDER BY IDStatus ASC   
+                ";
+                $status = dbQuery($conn,$sql);
+
+                // creates a radio button for every status 
+                while($statusResult = dbFetch($status)){
+                   
+                    echo ('<input type="radio" name="typeOfStatus" value="' . $statusResult->IDStatus . '" required>
+
+                            <label>' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
+                }
+
+                // shows an error if no status was selected
+                if (!isset($_POST["typeOfStatus"])) {
+
+                        $msg = '<p class="error">Please select a status.</p>';
+
+                } else {
+                        // converts the selected status ID into an integer
+                        $statusID = (int) $_POST["typeOfStatus"];
+                }
+                
+            ?>
         <label for="description">Description:</label>
         <textarea id="description" name="description"></textarea>
               <?php
                 if(isset($_POST["destination"]) && trim($_POST["destination"]) !== ""){
 
                     $destinationfield =$conn->real_escape_string(trim($_POST["destination"]));
+
                     $descriptionfield = $conn->real_escape_string($_POST["description"]);
-                    $statusfield = ;
+                    
                     $userID = (int) $_SESSION["userID"];
                     
                     $sql = "
@@ -161,6 +188,7 @@ $conn = dbConnect();
                     WHERE(
                         DestinationName ='" . $destinationfield . "'
                         AND FIDCity = " . $cityID . "
+                        AND FIDUser = " . $userID ."
                     )
                     ";
 
@@ -174,9 +202,9 @@ $conn = dbConnect();
                                 VALUES (
                                 '" . $destinationfield . "',
                                 '" . $descriptionfield . "',
-                                '" . $cityID . "',
-                                '" . $statusfield . "',
-                                '" . $userID . "',
+                                " . $cityID . ",
+                                " . $statusID . ",
+                                " . $userID . "
                                 )
                         ";
 
