@@ -10,6 +10,7 @@ $userID = (int) $_SESSION["userID"];
 
 $conn = dbConnect();
 
+$msg = "";
 ?>
 
 <!doctype html>
@@ -72,38 +73,89 @@ $conn = dbConnect();
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-    echo "<h3>" .
-        htmlspecialchars(
-            $destination->DestinationName,
-            ENT_QUOTES,
-            "UTF-8"
-        ) .
-    "</h3>";
+            echo "<h3>" .
+                htmlspecialchars(
+                    $destination->DestinationName,
+                    ENT_QUOTES,
+                    "UTF-8"
+                ) .
+            "</h3>";
 
-    echo "<p>City: " .
-        htmlspecialchars(
-            $destination->CityName,
-            ENT_QUOTES,
-            "UTF-8"
-        ) .
-    "</p>";
+            echo "<p>City: " .
+                htmlspecialchars(
+                    $destination->CityName,
+                    ENT_QUOTES,
+                    "UTF-8"
+                ) .
+            "</p>";
 
-    echo "<p>Country: " .
-        htmlspecialchars(
-            $destination->CountryName,
-            ENT_QUOTES,
-            "UTF-8"
-        ) .
-    "</p>";
+            echo "<p>Country: " .
+                htmlspecialchars(
+                    $destination->CountryName,
+                    ENT_QUOTES,
+                    "UTF-8"
+                ) .
+            "</p>";
 
-    echo "<p>Status: " .
-        htmlspecialchars(
-            $destination->StatusName,
-            ENT_QUOTES,
-            "UTF-8"
-        ) .
-    "</p>";
-}
+            echo "<p>Status: " .
+                htmlspecialchars(
+                    $destination->StatusName,
+                    ENT_QUOTES,
+                    "UTF-8"
+                ) .
+            "</p>";
+
+            // loads all available statuses from the database to update the status
+            $sql="
+
+                SELECT
+                    IDStatus,
+                    StatusName
+
+                FROM tbl_status
+
+                ORDER BY IDStatus ASC   
+                ";
+                $status = dbQuery($conn,$sql);
+
+                // creates a radio button for every status 
+                while($statusResult = dbFetch($status)){
+                   
+                    echo ('<input type="radio" name="typeOfStatus" value="' . $statusResult->IDStatus . '" required>
+
+                            <label>' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
+                }
+
+                echo('<button type="submit" name="changeStatus">Change status</button>');
+
+        
+                
+
+        }
+
+        /*STATUS UPDATE*/
+
+        if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_POST["destinationID"])) {
+
+            $statusID = (int) $_POST["typeOfStatus"];
+            $destinationID = (int) $_POST["destinationID"];
+        
+            $sql = "
+                    UPDATE tbl_destination
+
+                    SET FIDStatus = " . $statusID . "
+                    
+                    WHERE
+                        IDDestination = " . $destinationID . "
+                        AND FIDUser = " . $userID . "
+                ";
+
+            $statusOk = dbQuery($conn, $sql);
+
+            if ($statusOk) {
+                $msg = '<p class="success">Status updated successfully.</p>';
+            }  
+        }          
     ?>
     </main>
     </body>
