@@ -5,6 +5,7 @@ require ("includes/config.inc.php");
 require ("includes/auth.inc.php");
 require ("includes/db.inc.php");
 
+// gets the ID of the currently logged-in user
 $userID = (int) $_SESSION["userID"];
 
 $conn = dbConnect();
@@ -32,7 +33,7 @@ $conn = dbConnect();
     </nav>
     <main>
         <?php
-        
+        // selects all destinations
         $sql = "
                 SELECT
                     d.IDDestination,
@@ -45,23 +46,30 @@ $conn = dbConnect();
 
                 FROM tbl_destination AS d
 
+                -- connects each destination to its city
                 INNER JOIN tbl_city AS c
                       ON d.FIDCity = c.IDCity
 
+                -- connects each city to its country
                 INNER JOIN tbl_country AS co
                     ON c.FIDCountry = co.IDCountry
 
+                -- connects each destination to its current status
                 INNER JOIN tbl_status AS s
                     ON d.FIDStatus = s.IDStatus
 
+                -- shows only the destinations of the logged-in user    
                 WHERE d.FIDUser = " . $userID . "
 
+                -- displays the most recently added destinations first
                 ORDER BY d.CreatedAt DESC
 
             ";
 
+        // executes the database query
         $destinationResult = dbQuery($conn, $sql);
 
+        // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
     echo "<h3>" .
