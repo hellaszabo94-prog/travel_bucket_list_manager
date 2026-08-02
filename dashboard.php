@@ -16,7 +16,7 @@ require ("includes/auth.inc.php");
     <body>
     <h1>Travel Bucket List Manager</h1>
     <h2>Welcome to your personal Travel Bucket List Manager, 
-        <?= htmlspecialchars($_SESSION["Emailadress"], ENT_QUOTES, "UTF-8") ?>!</h2>
+        <? htmlspecialchars($_SESSION["Emailadress"], ENT_QUOTES, "UTF-8") ?>!</h2>
     <nav>
 		<ul>
 	    	<li><a href="">Suchen</a></li>
