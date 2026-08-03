@@ -11,6 +11,105 @@ $userID = (int) $_SESSION["userID"];
 $conn = dbConnect();
 
 $msg = "";
+
+$updatedDestinationID = null;
+
+/*STATUS UPDATE*/
+
+if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_POST["destinationID"])) {
+
+    $statusID = $_POST["typeOfStatus"];
+    $destinationID = $_POST["destinationID"];
+
+    $sql = "
+            UPDATE tbl_destination
+
+            SET FIDStatus = " . $statusID . "
+            
+            WHERE
+                IDDestination = " . $destinationID . "
+                AND FIDUser = " . $userID . "
+        ";
+
+    $statusOk = dbQuery($conn, $sql);
+
+    if ($statusOk) {
+        $msg = '<p class="success">Status updated successfully.</p>';
+        
+        //remembers which destination was updated.
+        $updatedDestinationID = $destinationID;
+    }  
+
+  
+}  
+
+/*STATUS UPDATE*/      
+
+/*AVAILABLE STATUSES*/
+
+ // loads all available statuses from the database to update the status
+$sql="
+
+    SELECT
+        IDStatus,
+        StatusName
+
+    FROM tbl_status
+
+    ORDER BY IDStatus ASC   
+    ";
+    $statusResult = dbQuery($conn,$sql);
+
+    $statuses = [];
+
+    // Stores all available statuses in an array.
+    while ($status = dbFetch($statusResult)) {
+        $statuses[] = $status;
+    }
+
+/*AVAILABLE STATUSES*/
+
+/*USER DESTINATIONS*/
+
+// selects all destinations
+$sql = "
+        SELECT
+            d.IDDestination,
+            d.DestinationName,
+            d.Description,
+            d.CreatedAt,
+            c.CityName,
+            co.CountryName,
+            d.FIDStatus,
+            s.StatusName
+
+        FROM tbl_destination AS d
+
+        -- connects each destination to its city
+        INNER JOIN tbl_city AS c
+                ON d.FIDCity = c.IDCity
+
+        -- connects each city to its country
+        INNER JOIN tbl_country AS co
+            ON c.FIDCountry = co.IDCountry
+
+        -- connects each destination to its current status
+        INNER JOIN tbl_status AS s
+            ON d.FIDStatus = s.IDStatus
+
+        -- shows only the destinations of the logged-in user    
+        WHERE d.FIDUser = " . $userID . "
+
+        -- displays the most recently added destinations first
+        ORDER BY d.CreatedAt DESC
+
+    ";
+
+// executes the database query
+$destinationResult = dbQuery($conn, $sql);
+
+/*USER DESTINATIONS*/
+
 ?>
 
 <!doctype html>
@@ -21,141 +120,92 @@ $msg = "";
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1>Travel Bucket List Manager</h1>
-    <h2>My Destinations</h2>
-    <nav>
-		<ul>
-	    	<li><a href="">Suchen</a></li>
-			<li><a href="add_destination.php">Add a new destination</a></li>
-			<li><a href="my_destinations.php">My Destinations</a></li>
-            <li><a href="">Fotos hochladen</a></li>
-            <li><a href="logout.php">Log out</a></li>
-		</ul>
-    </nav>
-    <main>
+        <h1>Travel Bucket List Manager</h1>
+        <h2>My Destinations</h2>
+        <nav>
+            <ul>
+                <li><a href="">Suchen</a></li>
+                <li><a href="add_destination.php">Add a new destination</a></li>
+                <li><a href="my_destinations.php">My Destinations</a></li>
+                <li><a href="">Fotos hochladen</a></li>
+                <li><a href="logout.php">Log out</a></li>
+            </ul>
+        </nav>
+        <main>
         <?php
-        // selects all destinations
-        $sql = "
-                SELECT
-                    d.IDDestination,
-                    d.DestinationName,
-                    d.Description,
-                    d.CreatedAt,
-                    c.CityName,
-                    co.CountryName,
-                    s.StatusName
 
-                FROM tbl_destination AS d
+        // Displays a message if the user has no saved destinations.
+        if ($destinationResult->num_rows === 0) {
 
-                -- connects each destination to its city
-                INNER JOIN tbl_city AS c
-                      ON d.FIDCity = c.IDCity
+            echo ($msg='<p>No destinations have been saved yet.</p>');
 
-                -- connects each city to its country
-                INNER JOIN tbl_country AS co
-                    ON c.FIDCountry = co.IDCountry
-
-                -- connects each destination to its current status
-                INNER JOIN tbl_status AS s
-                    ON d.FIDStatus = s.IDStatus
-
-                -- shows only the destinations of the logged-in user    
-                WHERE d.FIDUser = " . $userID . "
-
-                -- displays the most recently added destinations first
-                ORDER BY d.CreatedAt DESC
-
-            ";
-
-        // executes the database query
-        $destinationResult = dbQuery($conn, $sql);
+        }
 
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-            echo "<h3>" .
-                htmlspecialchars(
-                    $destination->DestinationName,
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) .
-            "</h3>";
+            echo ('<article class="destination">');
+            // displays the destination name
+            echo (  "<h3>" .
+                    htmlspecialchars(
+                        $destination->DestinationName,
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ) .
+                    "</h3>"
+                );
+            // displays the success message if status was updated
+            if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {
+                echo ($msg);
+            }
 
-            echo "<p>City: " .
+            echo ("<p>City: " .
                 htmlspecialchars(
                     $destination->CityName,
                     ENT_QUOTES,
                     "UTF-8"
                 ) .
-            "</p>";
+            "</p>");
 
-            echo "<p>Country: " .
+            echo ("<p>Country: " .
                 htmlspecialchars(
                     $destination->CountryName,
                     ENT_QUOTES,
                     "UTF-8"
                 ) .
-            "</p>";
+            "</p>");
 
-            echo "<p>Status: " .
+            echo ("<p>Current Status: " .
                 htmlspecialchars(
                     $destination->StatusName,
                     ENT_QUOTES,
                     "UTF-8"
                 ) .
-            "</p>";
+            "</p>");
 
-            // loads all available statuses from the database to update the status
-            $sql="
+            echo ('<form method="post">
+                        <fieldset>
+                            <legend>Change status</legend>
+                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '"> 
+                ');
 
-                SELECT
-                    IDStatus,
-                    StatusName
+            // creates a radio button for every status 
+            foreach ($statuses as $status){
 
-                FROM tbl_status
+                $radioID ="status-" .  $destination->IDDestination . "-" . $status->IDStatus;
 
-                ORDER BY IDStatus ASC   
-                ";
-                $status = dbQuery($conn,$sql);
+                $checked = $destination->FIDStatus === $status->IDStatus;
+    
+                    echo ('<input type="radio" id="'. $radioID .'" name="typeOfStatus" value="' . $status->IDStatus . '"' . $checked . 'required >
+                                <label for="' . $radioID . '">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . '</label>
+                        ');
+            }
 
-                // creates a radio button for every status 
-                while($statusResult = dbFetch($status)){
-                   
-                    echo ('<input type="radio" name="typeOfStatus" value="' . $statusResult->IDStatus . '" required>
-
-                            <label>' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
-                }
-
-                echo('<button type="submit" name="changeStatus">Change status</button>');
-
-        
-                
-
+            echo ('     </fieldset>
+                            <button type="submit" name="changeStatus">Change status</button>
+                    </form>
+                ');                
         }
-
-        /*STATUS UPDATE*/
-
-        if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_POST["destinationID"])) {
-
-            $statusID = (int) $_POST["typeOfStatus"];
-            $destinationID = (int) $_POST["destinationID"];
-        
-            $sql = "
-                    UPDATE tbl_destination
-
-                    SET FIDStatus = " . $statusID . "
-                    
-                    WHERE
-                        IDDestination = " . $destinationID . "
-                        AND FIDUser = " . $userID . "
-                ";
-
-            $statusOk = dbQuery($conn, $sql);
-
-            if ($statusOk) {
-                $msg = '<p class="success">Status updated successfully.</p>';
-            }  
-        }          
     ?>
     </main>
     </body>
