@@ -11,6 +11,7 @@ $userID = (int) $_SESSION["userID"];
 $conn = dbConnect();
 
 $msg = "";
+$deleteMsg="";
 
 $updatedDestinationID = null;
 
@@ -43,7 +44,36 @@ if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_PO
   
 }  
 
-/*STATUS UPDATE*/      
+/*STATUS UPDATE*/     
+
+/*DESTINATION DELETE*/
+
+if (isset($_POST["deleteDestination"]) && isset($_POST["destinationID"])) {
+    
+    $destinationID = $_POST["destinationID"];
+
+     //deletes only a destination by logged-in user
+    $sql = "
+        DELETE FROM tbl_destination
+        WHERE
+            IDDestination = " . $destinationID . "
+            AND FIDUser = " . $userID . "
+    ";
+
+    $deleteOk = dbQuery($conn, $sql);
+
+    if ($deleteOk && $conn->affected_rows === 1){
+
+        $deleteMsg = '<p class="success">Destination deleted successfully.</p>';
+
+    } else{
+
+        $deleteMsg = '<p class="error">The destination could not be deleted.</p>';
+
+    }
+}
+
+/*DESTINATION DELETE*/
 
 /*AVAILABLE STATUSES*/
 
@@ -110,6 +140,8 @@ $destinationResult = dbQuery($conn, $sql);
 
 /*USER DESTINATIONS*/
 
+
+
 ?>
 
 <!doctype html>
@@ -133,6 +165,8 @@ $destinationResult = dbQuery($conn, $sql);
         </nav>
         <main>
         <?php
+        
+        echo ($deleteMsg);
 
         // Displays a message if the user has no saved destinations.
         if ($destinationResult->num_rows === 0) {
@@ -154,6 +188,28 @@ $destinationResult = dbQuery($conn, $sql);
                     ) .
                     "</h3>"
                 );
+            //form for delete
+            echo ('
+                <form
+                    method="post"
+                    onsubmit="return confirm(\'Are you sure you want to delete this destination?\');"
+                >
+                    <input
+                        type="hidden"
+                        name="destinationID"
+                        value="' . $destination->IDDestination . '"
+                    >
+
+                    <button
+                        type="submit"
+                        name="deleteDestination"
+                        class="delete-button"
+                    >
+                        Delete destination
+                    </button>
+                </form>
+            ');
+
             // displays the success message if status was updated
             if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {
                 echo ($msg);
@@ -194,7 +250,7 @@ $destinationResult = dbQuery($conn, $sql);
 
                 $radioID ="status-" .  $destination->IDDestination . "-" . $status->IDStatus;
 
-                $checked = $destination->FIDStatus === $status->IDStatus;
+                $checked = ($destination->FIDStatus === $status->IDStatus) ? " checked" : "";
     
                     echo ('<input type="radio" id="'. $radioID .'" name="typeOfStatus" value="' . $status->IDStatus . '"' . $checked . 'required >
                                 <label for="' . $radioID . '">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . '</label>
@@ -204,7 +260,8 @@ $destinationResult = dbQuery($conn, $sql);
             echo ('     </fieldset>
                             <button type="submit" name="changeStatus">Change status</button>
                     </form>
-                ');                
+                ');  
+            echo ('</article>');              
         }
     ?>
     </main>
