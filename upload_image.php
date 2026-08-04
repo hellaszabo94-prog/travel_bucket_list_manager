@@ -31,6 +31,27 @@ $destination = dbFetch($destinationResult);
 
 if(count($_FILES)>0) {
 
+    $picture = $_FILES["destinationImage"];
+
+    if($picture["error"]==0) {
+
+        if(in_array($picture["type"],$picturesWhiteList)) {
+
+            $ok = move_uploaded_file($picture["tmp_name"],"./uploads/destinations/" . $picture["name"]);
+
+			if($ok) {
+				$msg = '<p class="success"></p>';
+			}
+			else {
+				$msg = '<p class="error"></p>';
+			}
+
+        }
+    }    
+    
+	
+
+
 
 }
 
