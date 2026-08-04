@@ -7,20 +7,32 @@ require ("includes/auth.inc.php");
 
 $conn = dbConnect();
 
+test($_FILES);
+
 $msg="";
 
+$picturesWhiteList = ["image/jpeg","image/gif","image/png","image/webp","image/avif","image/svg+xml"];
+
 $userID = (int) $_SESSION["userID"];
+$destinationID =  ($_POST["destinationID"]);
 
 $sql = "
     SELECT
         IDDestination,
         DestinationName
     FROM tbl_destination
-    WHERE FIDUser = " . $userID . "
-    ORDER BY DestinationName ASC
+    WHERE
+        IDDestination = " . $destinationID . "
+        AND FIDUser = " . $userID . "
 ";
 
 $destinationResult = dbQuery($conn, $sql);
+$destination = dbFetch($destinationResult);
+
+if(count($_FILES)>0) {
+
+
+}
 
 ?>
 
