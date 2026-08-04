@@ -10,7 +10,7 @@ require ("includes/auth.inc.php");
 <html lang="en">
     <head>
         <title>Travel Bucket List Manager</title>
-        <meta charset="utf_8">
+        <meta charset="utf-8">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>

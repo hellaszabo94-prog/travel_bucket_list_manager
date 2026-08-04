@@ -148,7 +148,7 @@ $destinationResult = dbQuery($conn, $sql);
 <html lang="en">
     <head>
         <title>Travel Bucket List Manager</title>
-        <meta charset="utf_8">
+        <meta charset="utf-8">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
@@ -189,26 +189,7 @@ $destinationResult = dbQuery($conn, $sql);
                     "</h3>"
                 );
             //form for delete
-            echo ('
-                <form
-                    method="post"
-                    onsubmit="return confirm(\'Are you sure you want to delete this destination?\');"
-                >
-                    <input
-                        type="hidden"
-                        name="destinationID"
-                        value="' . $destination->IDDestination . '"
-                    >
 
-                    <button
-                        type="submit"
-                        name="deleteDestination"
-                        class="delete-button"
-                    >
-                        Delete destination
-                    </button>
-                </form>
-            ');
 
             // displays the success message if status was updated
             if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {
@@ -260,7 +241,47 @@ $destinationResult = dbQuery($conn, $sql);
             echo ('     </fieldset>
                             <button type="submit" name="changeStatus">Change status</button>
                     </form>
-                ');  
+                ');
+            echo ('
+                <form
+                    method="post"
+                    onsubmit="return confirm(\'Are you sure you want to delete this destination?\');"
+                >
+                    <input
+                        type="hidden"
+                        name="destinationID"
+                        value="' . $destination->IDDestination . '"
+                    >
+
+                    <button
+                        type="submit"
+                        name="deleteDestination"
+                        
+                    >
+                        Delete destination
+                    </button>
+                </form>
+            ');  
+            echo ('
+                <form
+                    method="post"
+                    action="upload_image.php"
+                >
+                    <input
+                        type="hidden"
+                        name="destinationID"
+                        value="' . $destination->IDDestination . '"
+                    >
+
+                    <button
+                        type="submit"
+                        name="openImageUpload"
+                        
+                    >
+                        Upload photo
+                    </button>
+                </form>
+            ');
             echo ('</article>');              
         }
     ?>

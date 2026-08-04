@@ -70,7 +70,7 @@ if(isset($_POST["regButton"])){
 <html lang="en">
     <head>
         <title>Login</title>
-        <meta charset="utf_8">
+        <meta charset="utf-8">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
