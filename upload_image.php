@@ -10,6 +10,7 @@ $conn = dbConnect();
 test($_FILES);
 
 $msg="";
+$destination = null;
 
 // allowed image MIME types
 $picturesWhiteList = [
@@ -141,13 +142,43 @@ if (!isset($_POST["destinationID"])) {
 		<link rel="stylesheet" href="css/stylesheet.css">
 	</head>
 	<body>
-		<h1>Upload destination image</h1>
-		<?php echo($msg);?>
+		<h1>Travel Bucket List Manager</h1>
+        <h2>Upload destination image</h2>
+        <nav>
+            <ul>
+                <li><a href="">Suchen</a></li>
+                <li><a href="add_destination.php">Add a new destination</a></li>
+                <li><a href="my_destinations.php">My Destinations</a></li>
+                <li><a href="logout.php">Log out</a></li>
+            </ul>
+        </nav>
+		<?php 
+		
+		echo($msg);
+
+		if (isset($destination) && $destination !== null) {
+		echo (  "<h3>" .
+                    htmlspecialchars(
+                        $destination->DestinationName,
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ) .
+                    "</h3>"
+                );
+		}		
+		
+		
+		
+		?>
 		<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="destinationID" value=" <?= (int) $destination->IDDestination ?>">
 			<label for="destinationImage">Choose an image:
                 <input type="file" id="destinationImage" name="destinationImage" required>
 			</label>
-			<input type="submit" value="hochladen">
+			<button type="submit" name="uploadImage" >
+                    Upload image
+                </button>
 		</form>
+		<a href="my_destinations.php">Back to My Destinations</a>
 	</body>
 </html>
