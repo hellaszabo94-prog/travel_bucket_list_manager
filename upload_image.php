@@ -54,83 +54,101 @@ if (!isset($_POST["destinationID"])) {
 
 		$msg = '<p class="error">Destination not found.</p>';
 
-	} elseif(count($_FILES)>0) {
+	} else {
 
-		$picture = $_FILES["destinationImage"];
-
+		// checks the destination already has an image.
+    	$sql = "
+				SELECT
+					IDImage,
+					ImagePath
+				FROM tbl_image
+				WHERE FIDDestination = " . $destinationID . "
+    		";
 		
+		$existingImage = dbQuery($conn, $sql);	
+		$existingResult = dbFetch($existingImage);
 
-		if($picture["error"] === UPLOAD_ERR_OK) {
+		if ($existingResult !== null){
 
-			// determines the real MIME type of the uploaded file
-			$fileInfo = new finfo(FILEINFO_MIME_TYPE);
-			$mimeType = $fileInfo->file($picture["tmp_name"]);
+			$msg = '<p class="error">This destination already has an image.</p>';
 
-			// checks the MIME type is allowed
-			if(isset($picturesWhiteList[$mimeType])) {
+		} elseif(count($_FILES)>0) {
 
-				// defines the physical upload directory
-				$directory = __DIR__ . "/uploads/destinations/";
-
-				// creates the directory if it does not exist
-				if (!is_dir($directory)) {
-
-					mkdir($directory, 0755, true);
-
-				}
+			$picture = $_FILES["destinationImage"];
 
 
-				// generates a unique filename
-				$fileName = bin2hex(random_bytes(16)) . "." . $picturesWhiteList[$mimeType];
+			if($picture["error"] === UPLOAD_ERR_OK) {
 
-				// physical path 
-				$fileSystemPath =$directory . $fileName;
+				// determines the real MIME type of the uploaded file
+				$fileInfo = new finfo(FILEINFO_MIME_TYPE);
+				$mimeType = $fileInfo->file($picture["tmp_name"]);
 
-				// relative path store in the database
-				$imagePath = "./uploads/destinations/" . $fileName;
+				// checks the MIME type is allowed
+				if(isset($picturesWhiteList[$mimeType])) {
 
-				// moves the uploaded image to the destination folder
-				$ok = move_uploaded_file( $picture["tmp_name"], $fileSystemPath);
+					// defines the physical upload directory
+					$directory = __DIR__ . "/uploads/destinations/";
 
-				if($ok) {
+					// creates the directory if it does not exist
+					if (!is_dir($directory)) {
 
-					$imagePathSql =	$conn->real_escape_string($imagePath);
+						mkdir($directory, 0755, true);
 
-					// saves the image path and destination ID in the database
-					$sql = "
-						INSERT INTO tbl_image
-							(
-								FIDDestination,
-								ImagePath
+					}
+
+
+					// generates a unique filename
+					$fileName = bin2hex(random_bytes(16)) . "." . $picturesWhiteList[$mimeType];
+
+					// physical path 
+					$fileSystemPath =$directory . $fileName;
+
+					// relative path store in the database
+					$imagePath = "./uploads/destinations/" . $fileName;
+
+					// moves the uploaded image to the destination folder
+					$ok = move_uploaded_file( $picture["tmp_name"], $fileSystemPath);
+
+					if($ok) {
+
+						$imagePathSql =	$conn->real_escape_string($imagePath);
+
+						// saves the image path and destination ID in the database
+						$sql = "
+							INSERT INTO tbl_image
+								(
+									FIDDestination,
+									ImagePath
+								)
+							VALUES (
+								" . $destinationID . ",
+								'" . $imagePathSql . "'
 							)
-						VALUES (
-							" . $destinationID . ",
-							'" . $imagePathSql . "'
-						)
-					";
+						";
 
-					$imageOk = dbQuery($conn, $sql);
+						$imageOk = dbQuery($conn, $sql);
 
-					if ($imageOk) {
+						if ($imageOk) {
 
-						$msg = '<p class="success">Image uploaded successfully.</p>';
+							$msg = '<p class="success">Image uploaded successfully.</p>';
 
+						}
+						else {
+
+							unlink($fileSystemPath);
+
+							$msg = '<p class="error">The image could not be saved.</p>';
+							
+						}
 					}
 					else {
-
-						unlink($fileSystemPath);
-
-						$msg = '<p class="error">The image could not be saved.</p>';
-						
+						$msg = '<p class="error">An error occurred during the image upload.</p>';
 					}
-				}
-				else {
-					$msg = '<p class="error">An error occurred during the image upload.</p>';
-				}
 
-			}
-		}    
-	}
+				}
+			}    
+		}
+	}	
 }	
 ?>
 
