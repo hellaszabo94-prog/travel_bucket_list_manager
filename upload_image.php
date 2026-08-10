@@ -198,5 +198,16 @@ if (!isset($_POST["destinationID"])) {
                 </button>
 		</form>
 		<a href="my_destinations.php">Back to My Destinations</a>
+		<?php 
+			if (isset($existingResult) && $existingResult !== null){
+				echo("<p>This destination already has an image:</p>");
+				echo("<img src=" . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . " alt=" . htmlspecialchars($destination->DestinationName, ENT_QUOTES,"UTF-8") . "");
+			}
+			
+			
+			
+		?>
+		
+
 	</body>
 </html>
