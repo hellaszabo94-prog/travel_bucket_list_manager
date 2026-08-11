@@ -111,7 +111,8 @@ $sql = "
             c.CityName,
             co.CountryName,
             d.FIDStatus,
-            s.StatusName
+            s.StatusName,
+            i.ImagePath
 
         FROM tbl_destination AS d
 
@@ -126,6 +127,10 @@ $sql = "
         -- connects each destination to its current status
         INNER JOIN tbl_status AS s
             ON d.FIDStatus = s.IDStatus
+
+        -- connects each destination to uploaded image
+        LEFT JOIN tbl_image AS i
+             ON d.IDDestination = i.FIDDestination    
 
         -- shows only the destinations of the logged-in user    
         WHERE d.FIDUser = " . $userID . "
@@ -189,6 +194,10 @@ $destinationResult = dbQuery($conn, $sql);
                 );
             //form for delete
 
+            if ($destination->ImagePath !== null) {
+                
+                echo("<img src=" . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . ">");
+            }
 
             // displays the success message if status was updated
             if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {

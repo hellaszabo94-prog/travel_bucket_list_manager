@@ -189,7 +189,7 @@ if (!isset($_POST["destinationID"])) {
 		
 		?>
 		<form method="post" enctype="multipart/form-data">
-			<input type="hidden" name="destinationID" value=" <?= (int) $destination->IDDestination ?>">
+			<input type="hidden" name="destinationID" value=" <?php (int) $destination->IDDestination ?>">
 			<label for="destinationImage">Choose an image:
                 <input type="file" id="destinationImage" name="destinationImage" required>
 			</label>
@@ -201,7 +201,7 @@ if (!isset($_POST["destinationID"])) {
 		<?php 
 			if (isset($existingResult) && $existingResult !== null){
 				echo("<p>This destination already has an image:</p>");
-				echo("<img src=" . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . " alt=" . htmlspecialchars($destination->DestinationName, ENT_QUOTES,"UTF-8") . "");
+				echo("<img src=" . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . " ");
 			}
 			
 			
