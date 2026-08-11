@@ -11,6 +11,7 @@ test($_FILES);
 
 $msg="";
 $destination = null;
+$existingResult = null;
 
 // allowed image MIME types
 $picturesWhiteList = [
@@ -35,16 +36,18 @@ if (!isset($_POST["destinationID"])) {
 
 	// checks the destination belongs to the logged-in user
 
+	/*DESTINATION CHECK*/
+
 	$sql = "
-    SELECT
-        IDDestination,
-        DestinationName
+			SELECT
+				IDDestination,
+				DestinationName
 
-    FROM tbl_destination
+			FROM tbl_destination
 
-    WHERE
-        IDDestination = " . $destinationID . "
-        AND FIDUser = " . $userID . "
+			WHERE
+				IDDestination = " . $destinationID . "
+				AND FIDUser = " . $userID . "
 	";
 
 	$destinationResult = dbQuery($conn, $sql);
@@ -54,7 +57,11 @@ if (!isset($_POST["destinationID"])) {
 
 		$msg = '<p class="error">Destination not found.</p>';
 
+	/*DESTINATION CHECK*/
+
 	} else {
+
+	/*EXISTING IMAGE CHECK*/
 
 		// checks the destination already has an image.
     	$sql = "
@@ -67,51 +74,54 @@ if (!isset($_POST["destinationID"])) {
 		
 		$existingImage = dbQuery($conn, $sql);	
 		$existingResult = dbFetch($existingImage);
+	}	
 
-		if ($existingResult !== null){
+	/*EXISTING IMAGE CHECK*/	
 
-			$msg = '<p class="error">This destination already has an image.</p>';
+	 /*IMAGE UPLOAD*/
 
-		} elseif(count($_FILES)>0) {
+	if(count($_FILES)>0) {
 
-			$picture = $_FILES["destinationImage"];
+		$picture = $_FILES["destinationImage"];
+
+		if($picture["error"] === UPLOAD_ERR_OK) {
+
+			// determines the real MIME type of the uploaded file
+			$fileInfo = new finfo(FILEINFO_MIME_TYPE);
+			$mimeType = $fileInfo->file($picture["tmp_name"]);
+
+			// checks the MIME type is allowed
+			if(isset($picturesWhiteList[$mimeType])) {
+
+				// defines the physical upload directory
+				$directory = __DIR__ . "/uploads/destinations/";
+
+				// creates the directory if it does not exist
+				if (!is_dir($directory)) {
+
+					mkdir($directory, 0755, true);
+
+				}
 
 
-			if($picture["error"] === UPLOAD_ERR_OK) {
+				// generates a unique filename
+				$fileName = bin2hex(random_bytes(16)) . "." . $picturesWhiteList[$mimeType];
 
-				// determines the real MIME type of the uploaded file
-				$fileInfo = new finfo(FILEINFO_MIME_TYPE);
-				$mimeType = $fileInfo->file($picture["tmp_name"]);
+				// physical path 
+				$fileSystemPath = $directory . $fileName;
 
-				// checks the MIME type is allowed
-				if(isset($picturesWhiteList[$mimeType])) {
+				// relative path store in the database
+				$imagePath = "./uploads/destinations/" . $fileName;
 
-					// defines the physical upload directory
-					$directory = __DIR__ . "/uploads/destinations/";
+				// moves the uploaded image to the destination folder
+				$ok = move_uploaded_file( $picture["tmp_name"], $fileSystemPath);
 
-					// creates the directory if it does not exist
-					if (!is_dir($directory)) {
+				if($ok) {
 
-						mkdir($directory, 0755, true);
+					$imagePathSql =	$conn->real_escape_string($imagePath);
 
-					}
-
-
-					// generates a unique filename
-					$fileName = bin2hex(random_bytes(16)) . "." . $picturesWhiteList[$mimeType];
-
-					// physical path 
-					$fileSystemPath =$directory . $fileName;
-
-					// relative path store in the database
-					$imagePath = "./uploads/destinations/" . $fileName;
-
-					// moves the uploaded image to the destination folder
-					$ok = move_uploaded_file( $picture["tmp_name"], $fileSystemPath);
-
-					if($ok) {
-
-						$imagePathSql =	$conn->real_escape_string($imagePath);
+				/*NEW IMAGE*/
+					if ($existingResult === null) {
 
 						// saves the image path and destination ID in the database
 						$sql = "
@@ -132,23 +142,70 @@ if (!isset($_POST["destinationID"])) {
 
 							$msg = '<p class="success">Image uploaded successfully.</p>';
 
-						}
-						else {
+						} else {
 
 							unlink($fileSystemPath);
 
 							$msg = '<p class="error">The image could not be saved.</p>';
 							
 						}
-					}
-					else {
-						$msg = '<p class="error">An error occurred during the image upload.</p>';
+					
+					/*REPLACE EXISTING IMAGE*/		
+					} else {
+						// saves the old image path before update
+						$oldImagePath = $existingResult->ImagePath;
+
+						$sql = "
+								UPDATE tbl_image
+								SET
+									ImagePath = '" . $imagePathSql . "'
+								WHERE
+									FIDDestination = " . $destinationID . "
+								";
+
+						$updateImageOk = dbQuery($conn, $sql);
+
+						if ($updateImageOk) {
+							//creates the physical path of the old image
+							$oldFileSystemPath = __DIR__ . "/" . $oldImagePath;
+							
+							// Deletes the old image file.
+							if (file_exists($oldFileSystemPath)) {
+
+									unlink($oldFileSystemPath);
+
+							}
+
+							$msg ='<p class="success"> Image changed successfully.</p>';
+
+						} else {
+
+							// removes the new image if upload not possible
+							unlink($fileSystemPath);
+
+							$msg ='<p class="error">The image could not be changed.</p>';
+						}
+
 					}
 
-				}
-			}    
-		}
-	}	
+			} else {
+
+				$msg = '<p class="error">This image type is not allowed.</p>';
+
+			}
+
+		} else{
+
+			$msg = '<p class="error">The image could not be uploaded.</p>';
+
+		}   
+	} else{
+
+		$msg = '<p class="error">Image upload failed.</p>';
+
+	}
+	}
+		
 }	
 ?>
 
@@ -194,7 +251,13 @@ if (!isset($_POST["destinationID"])) {
                 <input type="file" id="destinationImage" name="destinationImage" required>
 			</label>
 			<button type="submit" name="uploadImage" >
-                    Upload image
+				<?php 
+					if ($existingResult === null) {
+        				echo ("Upload image");
+    				} else {
+        				echo ("Update image");
+   					}
+                 ?>
                 </button>
 		</form>
 		<a href="my_destinations.php">Back to My Destinations</a>
