@@ -11,6 +11,7 @@ $userID = (int) $_SESSION["userID"];
 $conn = dbConnect();
 
 $msg = "";
+
 $deleteMsg="";
 
 $updatedDestinationID = null;
@@ -195,7 +196,7 @@ $destinationResult = dbQuery($conn, $sql);
             //form for delete
 
             if ($destination->ImagePath !== null) {
-                
+
                 echo("<img src=" . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . ">");
             }
 
@@ -251,45 +252,43 @@ $destinationResult = dbQuery($conn, $sql);
                     </form>
                 ');
             echo ('
-                <form
-                    method="post"
-                    onsubmit="return confirm(\'Are you sure you want to delete this destination?\');"
-                >
-                    <input
-                        type="hidden"
-                        name="destinationID"
-                        value="' . $destination->IDDestination . '"
-                    >
-
-                    <button
-                        type="submit"
-                        name="deleteDestination"
-                        
-                    >
-                        Delete destination
-                    </button>
+                <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
+                    <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
+                        <button type="submit" name="deleteDestination">
+                            Delete destination
+                        </button>
                 </form>
             ');  
-            echo ('
-                <form
-                    method="post"
-                    action="upload_image.php"
-                >
-                    <input
-                        type="hidden"
-                        name="destinationID"
-                        value="' . $destination->IDDestination . '"
-                    >
+            if ($destination->ImagePath === null) {
+                // no image shows upload button   
+                echo ('
+                    <form method="post" action="upload_image.php" >
+                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                            <button type="submit" name="openImageUpload">
+                                Upload photo
+                            </button>
+                    </form>
+                ');
+            } else{
+                // image already exists shows change image button and delete button
+                echo ('
+                    <form method="post" action="upload_image.php" >
+                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                            <button type="submit" name="changeImage">
+                                Change image
+                            </button>
+                    </form>
+                ');
+                echo ('
+                    <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this image?\');">
+                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                            <button type="submit" name="deleteImage">
+                                Delete image
+                            </button>
+                    </form>
+                ');
 
-                    <button
-                        type="submit"
-                        name="openImageUpload"
-                        
-                    >
-                        Upload photo
-                    </button>
-                </form>
-            ');
+            }    
             echo ('</article>');              
         }
     ?>
