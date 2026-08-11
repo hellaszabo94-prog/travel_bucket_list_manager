@@ -18,3 +18,10 @@
 	border-left:3px solid red;
 	font-weight:bold;
 }
+.destinationImage {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    max-height: 350px;
+    object-fit: cover;
+}

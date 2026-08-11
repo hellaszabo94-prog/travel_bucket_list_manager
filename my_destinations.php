@@ -197,7 +197,7 @@ $destinationResult = dbQuery($conn, $sql);
 
             if ($destination->ImagePath !== null) {
 
-                echo("<img src=" . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . ">");
+                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage">');
             }
 
             // displays the success message if status was updated
