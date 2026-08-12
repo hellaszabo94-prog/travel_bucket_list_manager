@@ -270,20 +270,12 @@ $destinationResult = dbQuery($conn, $sql);
                     </form>
                 ');
             } else{
-                // image already exists shows change image button and delete button
+                // image already exists shows edit image button what send me to the upload images site
                 echo ('
                     <form method="post" action="upload_image.php" >
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
                             <button type="submit" name="changeImage">
-                                Change image
-                            </button>
-                    </form>
-                ');
-                echo ('
-                    <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this image?\');">
-                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" name="deleteImage">
-                                Delete image
+                                Edit image
                             </button>
                     </form>
                 ');

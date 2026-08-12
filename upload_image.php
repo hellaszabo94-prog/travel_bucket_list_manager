@@ -266,6 +266,14 @@ if (!isset($_POST["destinationID"])) {
 			if (isset($existingResult) && $existingResult !== null){
 				echo("<p>This destination already has an image:</p>");
 				echo('<img src="' . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage">');
+				echo ('
+                    <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this image?\');">
+                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                            <button type="submit" name="deleteImage">
+                                Delete image
+                            </button>
+                    </form>
+                ');
 			}
 			
 			
