@@ -103,7 +103,7 @@ if (!isset($_POST["destinationID"])) {
 				$msg ='<p class="success">Image deleted successfully.</p>';	
 
 				$existingResult = null;
-				
+
 			}else {
 
             	$msg ='<p class="error">The image could not be deleted.</p>';
@@ -182,6 +182,11 @@ if (!isset($_POST["destinationID"])) {
 
 								$msg = '<p class="success">Image uploaded successfully.</p>';
 
+								// creates the image object for the current page without running another SELECT query
+								$existingResult = new stdClass();
+								$existingResult->IDImage = $conn->insert_id;
+								$existingResult->ImagePath = $imagePath;
+
 							} else {
 
 								unlink($fileSystemPath);
@@ -217,6 +222,8 @@ if (!isset($_POST["destinationID"])) {
 								}
 
 								$msg ='<p class="success"> Image changed successfully.</p>';
+
+								$existingResult->ImagePath = $imagePath;
 
 							}else {
 
@@ -299,7 +306,7 @@ if (!isset($_POST["destinationID"])) {
 			if (isset($existingResult) && $existingResult !== null){
 				echo("<p>This destination already has an image:</p>");
 				echo('<img src="' . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage">');
-				echo ('
+				echo('
                     <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this image?\');">
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
                             <button type="submit" name="deleteImage">
