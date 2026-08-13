@@ -78,6 +78,39 @@ if (!isset($_POST["destinationID"])) {
 
 		/*EXISTING IMAGE CHECK*/	
 
+		/* DELETE IMAGE */
+		if (isset($_POST["deleteImage"]) && $existingResult !== null) {
+	
+
+        	$oldImagePath = $existingResult->ImagePath;
+
+			$sql = "
+					DELETE FROM tbl_image
+					WHERE IDImage = " . $existingResult->IDImage . "
+			";
+
+			$deleteImageOk = dbQuery($conn, $sql);
+
+			if ($deleteImageOk && $conn->affected_rows === 1) {
+
+				$fileSystemPath = __DIR__ . "/" . $oldImagePath;
+
+				    if (file_exists($fileSystemPath)) {
+
+                		unlink($fileSystemPath);
+            		}
+
+				$msg ='<p class="success">Image deleted successfully.</p>';	
+
+				$existingResult = null;
+				
+			}else {
+
+            	$msg ='<p class="error">The image could not be deleted.</p>';
+        	}
+		}
+		/* DELETE IMAGE */
+
 		/*IMAGE UPLOAD*/
 
 	if(count($_FILES)>0) {
