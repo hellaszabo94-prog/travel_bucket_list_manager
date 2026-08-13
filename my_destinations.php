@@ -53,7 +53,24 @@ if (isset($_POST["deleteDestination"]) && isset($_POST["destinationID"])) {
     
     $destinationID = $_POST["destinationID"];
 
-     //deletes only a destination by logged-in user
+    // gets the image path before deleting the destination
+    $sql = "
+        SELECT
+            i.ImagePath
+        FROM tbl_image AS i
+
+        INNER JOIN tbl_destination AS d
+            ON i.FIDDestination = d.IDDestination
+
+        WHERE
+            d.IDDestination = " . $destinationID . "
+            AND d.FIDUser = " . $userID . "
+    ";
+
+    $imageResult = dbQuery($conn, $sql);
+    $destinationImage = dbFetch($imageResult);
+
+    //deletes only a destination by logged-in user
     $sql = "
         DELETE FROM tbl_destination
         WHERE
@@ -64,6 +81,17 @@ if (isset($_POST["deleteDestination"]) && isset($_POST["destinationID"])) {
     $deleteOk = dbQuery($conn, $sql);
 
     if ($deleteOk && $conn->affected_rows === 1){
+
+        // deletes the physical image file if one exists.
+        if ($destinationImage !== null) {
+
+            $fileSystemPath =__DIR__ . "/" . $destinationImage->ImagePath;
+
+            if (file_exists($fileSystemPath)) {
+
+                unlink($fileSystemPath);
+            }
+        }
 
         $deleteMsg = '<p class="success">Destination deleted successfully.</p>';
 
