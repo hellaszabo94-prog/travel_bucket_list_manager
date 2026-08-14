@@ -267,7 +267,7 @@ if (!isset($_POST["destinationID"])) {
         <h2>Upload destination image</h2>
         <nav>
             <ul>
-                <li><a href="">Suchen</a></li>
+                <li><a href="dashboard.php">Home</a></li>
                 <li><a href="add_destination.php">Add a new destination</a></li>
                 <li><a href="my_destinations.php">My Destinations</a></li>
                 <li><a href="logout.php">Log out</a></li>
