@@ -197,6 +197,15 @@ $destinationResult = dbQuery($conn, $sql);
             </ul>
         </nav>
         <main>
+            <form method="post">
+                <fieldset>
+                <label>
+                    Search destinations:
+                </label>
+                <input type="text" id="search" name="search" placeholder="Destination, city or country" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
+                <button type="submit" name="searchDestination">Search</button>
+                </fieldset>
+            </form>
         <?php
         
         echo ($deleteMsg);
