@@ -4,6 +4,9 @@ require ("includes/common.inc.php");
 require ("includes/config.inc.php");
 require ("includes/auth.inc.php");
 
+test($_SESSION);
+
+
 ?>
 
 <!doctype html>
@@ -15,8 +18,7 @@ require ("includes/auth.inc.php");
     </head>
     <body>
     <h1>Travel Bucket List Manager</h1>
-    <h2>Welcome to your personal Travel Bucket List Manager, 
-        <? htmlspecialchars($_SESSION["Emailadress"], ENT_QUOTES, "UTF-8") ?>!</h2>
+    <h2>Welcome to your personal Travel Bucket List Manager, <?= htmlspecialchars($_SESSION["Firstname"], ENT_QUOTES, "UTF-8") ?>!</h2>
     <nav>
 		<ul>
 	    	<li><a href="dashboard.php">Home</a></li>

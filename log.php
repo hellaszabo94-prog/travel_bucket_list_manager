@@ -46,7 +46,8 @@ if(isset($_POST["logButton"])>0){
             // save the logged-in user's data in the session
             $_SESSION["successLogin"] = true;
             $_SESSION["userID"] = $user->IDUser;
-            $_SESSION["Emailadress"] = $logemail;
+            $_SESSION["Emailadress"] = $user->$logemail;
+            $_SESSION["Firstname"] = $user->Firstname;
 
             // redirect the user to the dashboard
             header("Location: dashboard.php");
