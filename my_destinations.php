@@ -203,6 +203,13 @@ $destinationResult = dbQuery($conn, $sql);
 
 /*USER DESTINATIONS*/
 
+// no result after search
+
+if ($destinationResult->num_rows === 0) {
+
+    echo '<p class="info">No destinations found.</p>';
+
+}
 
 
 ?>
