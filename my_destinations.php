@@ -128,6 +128,33 @@ $sql="
 
 /*AVAILABLE STATUSES*/
 
+/*DESTINATION SEARCH*/
+
+$searchCondition = "";
+$search = "";
+
+if (
+    isset($_POST["searchDestination"]) &&
+    isset($_POST["search"]) &&
+    strlen(trim($_POST["search"])) > 0
+) {
+
+    $search = trim($_POST["search"]);
+
+    $searchSql = $conn->real_escape_string($search);
+
+    // add the search filters to the destination query
+    $searchCondition = "
+        AND (
+            d.DestinationName LIKE '%" . $searchSql . "%'
+            OR c.CityName LIKE '%" . $searchSql . "%'
+            OR co.CountryName LIKE '%" . $searchSql . "%'
+        )
+    ";
+}
+
+/*DESTINATION SEARCH*/
+
 /*USER DESTINATIONS*/
 
 // selects all destinations
@@ -163,6 +190,8 @@ $sql = "
 
         -- shows only the destinations of the logged-in user    
         WHERE d.FIDUser = " . $userID . "
+
+        " . $searchCondition . "
 
         -- displays the most recently added destinations first
         ORDER BY d.CreatedAt DESC
