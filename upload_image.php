@@ -7,7 +7,7 @@ require ("includes/auth.inc.php");
 
 $conn = dbConnect();
 
-test($_FILES);
+//test($_FILES);
 
 $msg="";
 $destination = null;

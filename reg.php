@@ -7,7 +7,7 @@ require("includes/db.inc.php");
 // create database connection
 $conn = dbConnect();
 
-test($_POST);
+//test($_POST);
 
 $msg ="";
 

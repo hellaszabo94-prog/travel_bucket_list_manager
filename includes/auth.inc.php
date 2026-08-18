@@ -1,5 +1,5 @@
 <?php
-test($_POST);
+// test($_POST);
 
 // start the session and load the stored session data
 

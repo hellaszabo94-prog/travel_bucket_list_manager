@@ -1,6 +1,6 @@
 <?php 
 //create a constant to the TESTOPERATION turn in or turn of
-define("TESTOPERATION",true); 
+define("TESTOPERATION",false); 
 
 // stores database settings in an associative array constant.
 define("DB",[

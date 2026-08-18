@@ -4,7 +4,7 @@ require("includes/config.inc.php");
 require("includes/common.inc.php");
 
 //call the test function
-test($_POST);
+//test($_POST);
 
 //check data form $_Post and send on the next page
 if(isset($_POST["logButton"])){

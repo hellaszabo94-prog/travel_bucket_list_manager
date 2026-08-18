@@ -4,7 +4,7 @@ require ("includes/common.inc.php");
 require ("includes/config.inc.php");
 require ("includes/auth.inc.php");
 
-test($_SESSION);
+//test($_SESSION);
 
 
 ?>
