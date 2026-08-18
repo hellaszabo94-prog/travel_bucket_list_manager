@@ -132,6 +132,7 @@ $sql="
 
 $searchCondition = "";
 $search = "";
+$isSearching = false;
 
 if (
     isset($_POST["searchDestination"]) &&
@@ -139,6 +140,8 @@ if (
     strlen(trim($_POST["search"])) > 0
 ) {
 
+    $isSearching = true;
+    
     $search = trim($_POST["search"]);
 
     $searchSql = $conn->real_escape_string($search);
@@ -207,9 +210,18 @@ $destinationResult = dbQuery($conn, $sql);
 
 if ($destinationResult->num_rows === 0) {
 
-    echo '<p class="info">No destinations found.</p>';
+    if ($isSearching) {
+
+        echo '<p class="info">No destinations found.</p>';
+    } else {
+
+        echo '<p class="info">You haven\'t added any destinations yet. Add your first destination.</p>';
+
+    }
 
 }
+
+
 
 
 ?>
