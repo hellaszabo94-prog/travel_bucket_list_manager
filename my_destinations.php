@@ -215,6 +215,7 @@ if ($destinationResult->num_rows === 0) {
     if ($isSearching) {
 
         $listMsg='<p class="info">No destinations found.</p>';
+        
     } else {
 
         $listMsg='<p class="info">You haven\'t added any destinations yet. Add your first destination.</p>';
@@ -258,14 +259,8 @@ if ($destinationResult->num_rows === 0) {
             </form>
         <?php
         
+        echo ($listMsg);
         echo ($deleteMsg);
-
-        // Displays a message if the user has no saved destinations.
-        if ($destinationResult->num_rows === 0) {
-
-            echo ($msg='<p>No destinations have been saved yet.</p>');
-
-        }
 
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
