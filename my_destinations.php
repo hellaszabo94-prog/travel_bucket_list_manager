@@ -14,14 +14,16 @@ $msg = "";
 
 $deleteMsg="";
 
+$listMsg="";
+
 $updatedDestinationID = null;
 
 /*STATUS UPDATE*/
 
 if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_POST["destinationID"])) {
 
-    $statusID = $_POST["typeOfStatus"];
-    $destinationID = $_POST["destinationID"];
+    $statusID =  (int) $_POST["typeOfStatus"];
+    $destinationID =  (int) $_POST["destinationID"];
 
     $sql = "
             UPDATE tbl_destination
@@ -212,10 +214,10 @@ if ($destinationResult->num_rows === 0) {
 
     if ($isSearching) {
 
-        echo '<p class="info">No destinations found.</p>';
+        $listMsg='<p class="info">No destinations found.</p>';
     } else {
 
-        echo '<p class="info">You haven\'t added any destinations yet. Add your first destination.</p>';
+        $listMsg='<p class="info">You haven\'t added any destinations yet. Add your first destination.</p>';
 
     }
 
