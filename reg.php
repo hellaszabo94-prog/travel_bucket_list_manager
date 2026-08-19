@@ -27,11 +27,11 @@ if(count($_POST)>0){
         )
     ";
 
-    test($sql);
+    //test($sql);
 
     $dates = dbQuery($conn,$sql);
 
-    test($dates);
+    //test($dates);
 
     $newdates=dbFetch($dates);
 
@@ -68,7 +68,7 @@ if(count($_POST)>0){
                     )
                 ";
 
-                test($sql);
+                //test($sql);
 
                 $ok = dbQuery($conn,$sql);
 
@@ -106,6 +106,7 @@ if(isset($_POST["logButton"])){
     <head>
         <title>Sing up</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>

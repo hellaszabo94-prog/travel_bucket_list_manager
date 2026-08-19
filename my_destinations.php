@@ -53,7 +53,7 @@ if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_PO
 
 if (isset($_POST["deleteDestination"]) && isset($_POST["destinationID"])) {
     
-    $destinationID = $_POST["destinationID"];
+    $destinationID = (int) $_POST["destinationID"];
 
     // gets the image path before deleting the destination
     $sql = "
@@ -234,6 +234,7 @@ if ($destinationResult->num_rows === 0) {
     <head>
         <title>Travel Bucket List Manager</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
