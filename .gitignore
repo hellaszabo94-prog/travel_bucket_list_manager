@@ -1,3 +1,6 @@
 includes/config.inc.php
+
 uploads/destinations/*
 !uploads/destinations/.gitkeep
+
+node_modules/
