@@ -15,10 +15,11 @@ require ("includes/auth.inc.php");
         <title>Travel Bucket List Manager</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1>Travel Bucket List Manager</h1>
+    <h1 class="text-4xl font-bold">Travel Bucket List Manager</h1>
     <h2>Welcome to your personal Travel Bucket List Manager, <?= htmlspecialchars($_SESSION["Firstname"], ENT_QUOTES, "UTF-8") ?>!</h2>
     <nav>
 		<ul>
