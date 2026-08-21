@@ -31,7 +31,7 @@ if(isset($_POST["logButton"])>0){
 
 	$userlist = dbQuery($conn,$sql);
 
-	test($userlist);
+	//test($userlist);
 
     // get the user data from the query result
     $user = dbFetch($userlist);

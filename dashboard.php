@@ -19,7 +19,7 @@ require ("includes/auth.inc.php");
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
     <body>
-    <h1 class="text-4xl font-bold">Travel Bucket List Manager</h1>
+    <h1 class="text-5xl font-bold text-blue-700">Travel Bucket List Manager</h1>
     <h2>Welcome to your personal Travel Bucket List Manager, <?= htmlspecialchars($_SESSION["Firstname"], ENT_QUOTES, "UTF-8") ?>!</h2>
     <nav>
 		<ul>
