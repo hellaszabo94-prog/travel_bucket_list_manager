@@ -18,16 +18,16 @@ require ("includes/auth.inc.php");
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body class="bg-sky-100 text-sky-950 min-h-screen">
+    <body class="bg-sky-50 text-sky-950 min-h-screen">
         <header class="bg-white border-b border-sky-100 shadow-sm">
-            <nav class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-8">
-                <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="h-14 w-auto">
-                <ul class="flex gap-6">
-                    <li><a href="dashboard.php" class="font-medium text-sky-700 hover:text-sky-400 transition">Home</a></li>
-                    <li><a href="add_destination.php" class="font-medium text-sky-700 hover:text-sky-400 transition">Add a new destination</a></li>
-                    <li><a href="my_destinations.php" class="font-medium text-sky-700 hover:text-sky-400 transition">My Destinations</a></li>
+            <nav class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-center md:self-auto">
+                <ul class="flex flex-col md:flex-row gap-3 md:gap-6">
+                    <li><a href="dashboard.php" class="font-medium text-sky-600 hover:text-sky-400 transition">Home</a></li>
+                    <li><a href="add_destination.php" class="font-medium text-sky-600 hover:text-sky-400 transition">Add a new destination</a></li>
+                    <li><a href="my_destinations.php" class="font-medium text-sky-600 hover:text-sky-400 transition">My Destinations</a></li>
                 </ul>
-                <a href="logout.php" class="ml-auto font-medium text-sky-700 hover:text-sky-400 transition">Log out</a>
+                <a href="logout.php" class="md:ml-auto font-medium text-sky-700 hover:text-sky-400 transition">Log out</a>
             </nav>
         </header>
         <main class="max-w-5xl mx-auto px-4 py-8">  
