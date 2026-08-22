@@ -18,10 +18,10 @@ require ("includes/auth.inc.php");
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body class="bg-sky-100 text-slate-950 min-h-screen">
-        <main class="max-w-6xl mx-auto px-4">  
-            <h1 class="text-5xl font-bold">Travel Bucket List Manager</h1>
-            <h2>Welcome to your personal Travel Bucket List Manager, <?= htmlspecialchars($_SESSION["Firstname"], ENT_QUOTES, "UTF-8") ?>!</h2>
+    <body class="bg-sky-100 text-sky-950 min-h-screen">
+        <main class="max-w-6xl mx-auto px-4 py-8">  
+            <h1 class="text-4xl font-bold text-sky-950">Travel Bucket List Manager</h1>
+            <h2 class="mt-3 text-lg text-sky-600" >Welcome to your personal Travel Bucket List Manager, <?= htmlspecialchars($_SESSION["Firstname"], ENT_QUOTES, "UTF-8") ?>!</h2>
             <nav>
                 <ul>
                     <li><a href="dashboard.php">Home</a></li>
