@@ -1,4 +1,5 @@
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -31,6 +32,7 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --font-display: "Nunito", sans-serif;
     --color-travel-50: #F7FCE8;
     --color-travel-100: #EFF9D2;
     --color-travel-200: #E0F4A4;
@@ -289,15 +291,14 @@
   .bg-travel-50 {
     background-color: var(--color-travel-50);
   }
-  .bg-travel-200 {
-    background-color: var(--color-travel-200);
+  .bg-travel-600 {
+    background-color: var(--color-travel-600);
+  }
+  .bg-travel-700 {
+    background-color: var(--color-travel-700);
   }
   .bg-white {
     background-color: var(--color-white);
-  }
-  .bg-gradient-to-b {
-    --tw-gradient-position: to bottom in oklab;
-    background-image: linear-gradient(var(--tw-gradient-stops));
   }
   .bg-gradient-to-r {
     --tw-gradient-position: to right in oklab;
@@ -313,18 +314,6 @@
   }
   .from-travel-300 {
     --tw-gradient-from: var(--color-travel-300);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-travel-400 {
-    --tw-gradient-from: var(--color-travel-400);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-travel-500 {
-    --tw-gradient-from: var(--color-travel-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .to-travel-50 {
-    --tw-gradient-to: var(--color-travel-50);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-travel-200 {
@@ -360,6 +349,9 @@
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
   }
+  .font-display {
+    font-family: var(--font-display);
+  }
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
@@ -392,6 +384,9 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .text-travel-100 {
+    color: var(--color-travel-100);
+  }
   .text-travel-600 {
     color: var(--color-travel-600);
   }
@@ -409,12 +404,6 @@
   }
   .underline {
     text-decoration-line: underline;
-  }
-  .decoration-double {
-    text-decoration-style: double;
-  }
-  .decoration-solid {
-    text-decoration-style: solid;
   }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
