@@ -17,17 +17,23 @@ require ("includes/auth.inc.php");
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
+        <script src="js/navigation.js"></script>
     </head>
     <body class="bg-travel-50 text-travel-950 min-h-screen">
         <header class="bg-white border-b border-travel-100 shadow-sm">
-            <nav class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-center md:self-auto">
-                <ul class="flex flex-col md:flex-row gap-3 md:gap-6">
+            <nav id="mobile" class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 md:gap-8">
+                <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-start md:self-auto">
+                <button type="button" id="navRwd" class="ml-auto flex h-10 w-10 items-center justify-center rounded-lg bg-travel-100 hover:bg-travel-200 transition md:hidden cursor-pointer">
+                    <img id="menuIcon" class="h-6 w-6" src="./svg/menu.svg">
+                    <img id="closeIcon" class="hidden h-6 w-6" src="./svg/close.svg">
+                </button>
+                <ul class="hidden w-full flex-col gap-3 md:flex md:w-auto md:flex-row md:gap-6">
                     <li><a href="dashboard.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Home</a></li>
                     <li><a href="add_destination.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Add a new destination</a></li>
                     <li><a href="my_destinations.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">My Destinations</a></li>
+                    <li class="md:hidden"><a href="logout.php" class="inline-block bg-travel-800 text-white font-display font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a></li>
                 </ul>
-                <a href="logout.php" class="font-display md:ml-auto bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a>
+                <a href="logout.php" class="hidden md:inline-block font-display md:ml-auto bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a>
             </nav>
         </header>
         <main class="max-w-5xl mx-auto px-4 py-8">  
@@ -55,6 +61,11 @@ require ("includes/auth.inc.php");
                                 <p class="mt-2 text-travel-800">Upload an image and update or remove your saved destination.</p>
                             </div>
                         </div>
+                </div>
+                <div class="mt-8 rounded-lg border border-travel-200 bg-travel-50 p-4">
+                    <h3 class="font-display text-xl font-semibold text-travel-900">Portfolio project</h3>
+                    <p class="mt-2 text-travel-800 leading-relaxed">This application was created as a practice project for my Full-Stack Web Developer portfolio. It demonstrates user authentication, database-backed destination management, image uploads and responsive interface design.</p>
+                    <p class="mt-2 text-travel-800 leading-relaxed">As this is a demo version, some features are intentionally limited. For example, each destination currently supports one uploaded image.</p>
                 </div>
             </section>
         </main>
