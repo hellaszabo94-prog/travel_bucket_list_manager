@@ -58,5 +58,10 @@ require ("includes/auth.inc.php");
                 </div>
             </section>
         </main>
+        <footer class="mt-10 border-t border-travel-200">
+            <div class="max-w-7xl mx-auto px-4 py-6">
+                <p class="text-sm text-travel-700">© 2026 Hella Haraszti-Szabo. All rights reserved.</p>
+            </div>
+        </footer>
     </body>
 </html>
