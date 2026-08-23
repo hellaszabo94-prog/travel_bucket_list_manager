@@ -39,6 +39,23 @@ require ("includes/auth.inc.php");
                     <p class="mt-3 text-travel-800 leading-relaxed">The Travel Bucket List Manager helps you organize the places you would like to visit and keep track of your travel plans.</p>
                     <p class="mt-3 text-travel-800 leading-relaxed">You can add destinations, assign a travel status, upload an image and manage your saved destinations from your personal list.</p>
                 </div>
+                <div class="mt-10 border-t border-travel-100 pt-8">
+                    <h3 class="text-2xl font-semibold text-travel-900">How does it work?</h3>
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="border border-travel-100 rounded-lg p-4 bg-gradient-to-r from-travel-100 to-travel-200">
+                                <h4 class="text-lg font-semibold text-travel-900">1. Add a destination</h4>
+                                <p class="mt-2 text-travel-800">Add a place you would like to visit.</p>
+                            </div>
+                            <div class="border border-travel-100 rounded-lg p-4 bg-gradient-to-r from-travel-200 to-travel-300">
+                                <h4 class="text-lg font-semibold text-travel-900">2. Choose a status</h4>
+                                <p class="mt-2 text-travel-800">Mark your destination according to your current travel plans.</p>
+                            </div>
+                            <div class="border border-travel-100 rounded-lg p-4 bg-gradient-to-r from-travel-300 to-travel-400">
+                                <h4 class="text-lg font-semibold text-travel-900">3. Manage your destination</h4>
+                                <p class="mt-2 text-travel-800">Upload an image and update or remove your saved destination.</p>
+                            </div>
+                        </div>
+                </div>
             </section>
         </main>
     </body>
