@@ -40,7 +40,7 @@ $msg="";
     </header>
     <main class="max-w-5xl mx-auto px-4 py-8"> 
         <section class="bg-white rounded-xl border border-travel-100 shadow-sm p-6">
-            <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-500 bg-clip-text text-transparent ">Add a new destination</h1>
+            <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent ">Add a new destination</h1>
             <form method="post">
                 <div class="mt-6">
                     <label for="country" class="block font-display font-bold text-travel-800">Country:</label>

@@ -235,20 +235,32 @@ if ($destinationResult->num_rows === 0) {
         <title>Travel Bucket List Manager</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
+        <script src="js/navigation.js"></script>
     </head>
-    <body>
-        <h1>Travel Bucket List Manager</h1>
-        <h2>My Destinations</h2>
-        <nav>
-            <ul>
-                <li><a href="dashboard.php">Home</a></li>
-                <li><a href="add_destination.php">Add a new destination</a></li>
-                <li><a href="my_destinations.php">My Destinations</a></li>
-                <li><a href="logout.php">Log out</a></li>
+    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-100 text-travel-950">
+         <header class="bg-white border-b border-travel-100 shadow-sm">
+        <nav id="mobile" class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 md:gap-8">
+            <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-start md:self-auto">
+            <button type="button" id="navRwd" class="ml-auto flex h-10 w-10 items-center justify-center rounded-lg bg-travel-100 hover:bg-travel-200 transition md:hidden cursor-pointer">
+                <img id="menuIcon" class="h-6 w-6" src="./svg/menu.svg">
+                <img id="closeIcon" class="hidden h-6 w-6" src="./svg/close.svg">
+            </button>
+            <ul class="hidden w-full flex-col gap-3 md:flex md:w-auto md:flex-row md:gap-6">
+                <li><a href="dashboard.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Home</a></li>
+                <li><a href="add_destination.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Add a new destination</a></li>
+                <li><a href="my_destinations.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">My Destinations</a></li>
+                <li class="md:hidden"><a href="logout.php" class="inline-block bg-travel-800 text-white font-display font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a></li>
             </ul>
+            <a href="logout.php" class="hidden md:inline-block font-display md:ml-auto bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a>
         </nav>
-        <main>
+    </header>
+    <main class="max-w-5xl mx-auto px-4 py-8">     
+        <div class="mb-8">
+            <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">My Destinations</h1>
+            <p class="mt-2 text-travel-800">View and manage your saved travel destinations.</p>
+        </div>    
             <form method="post">
                 <fieldset>
                 <label>
