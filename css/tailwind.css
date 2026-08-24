@@ -22,6 +22,8 @@
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
@@ -199,9 +201,6 @@
   }
 }
 @layer utilities {
-  .visible {
-    visibility: visible;
-  }
   .relative {
     position: relative;
   }
@@ -289,9 +288,6 @@
   .flex-col {
     flex-direction: column;
   }
-  .flex-row {
-    flex-direction: row;
-  }
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -307,14 +303,8 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
-  .self-center {
-    align-self: center;
-  }
   .self-start {
     align-self: flex-start;
-  }
-  .self-stretch {
-    align-self: stretch;
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -359,17 +349,8 @@
   .bg-travel-100 {
     background-color: var(--color-travel-100);
   }
-  .bg-travel-600 {
-    background-color: var(--color-travel-600);
-  }
-  .bg-travel-700 {
-    background-color: var(--color-travel-700);
-  }
   .bg-travel-800 {
     background-color: var(--color-travel-800);
-  }
-  .bg-travel-900 {
-    background-color: var(--color-travel-900);
   }
   .bg-white {
     background-color: var(--color-white);
@@ -390,12 +371,12 @@
     --tw-gradient-from: var(--color-travel-300);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
-  .from-travel-500 {
-    --tw-gradient-from: var(--color-travel-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
   .from-travel-900 {
     --tw-gradient-from: var(--color-travel-900);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-travel-50 {
+    --tw-gradient-to: var(--color-travel-50);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-travel-200 {
@@ -412,10 +393,6 @@
   }
   .to-travel-500 {
     --tw-gradient-to: var(--color-travel-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .to-travel-700 {
-    --tw-gradient-to: var(--color-travel-700);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .bg-clip-text {
@@ -455,6 +432,10 @@
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
   .text-4xl {
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
@@ -489,12 +470,6 @@
   }
   .text-transparent {
     color: transparent;
-  }
-  .text-travel-100 {
-    color: var(--color-travel-100);
-  }
-  .text-travel-600 {
-    color: var(--color-travel-600);
   }
   .text-travel-700 {
     color: var(--color-travel-700);
@@ -537,12 +512,6 @@
     .hover\:bg-travel-600:hover {
       background-color: var(--color-travel-600);
     }
-    .hover\:bg-travel-700:hover {
-      background-color: var(--color-travel-700);
-    }
-    .hover\:text-travel-500:hover {
-      color: var(--color-travel-500);
-    }
     .hover\:text-travel-600:hover {
       color: var(--color-travel-600);
     }
@@ -575,9 +544,6 @@
     .md\:flex-row {
       flex-direction: row;
     }
-    .md\:items-center {
-      align-items: center;
-    }
     .md\:gap-6 {
       gap: calc(var(--spacing) * 6);
     }
@@ -587,9 +553,21 @@
     .md\:self-auto {
       align-self: auto;
     }
+    .md\:text-3xl {
+      font-size: var(--text-3xl);
+      line-height: var(--tw-leading, var(--text-3xl--line-height));
+    }
     .md\:text-5xl {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+    .md\:text-xl {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+    .md\:font-bold {
+      --tw-font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-bold);
     }
   }
 }
