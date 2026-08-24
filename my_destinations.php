@@ -261,13 +261,14 @@ if ($destinationResult->num_rows === 0) {
             <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">My Destinations</h1>
             <p class="mt-2 font-medium text-travel-800">View and manage your saved travel destinations.</p>
         </div>    
-            <form method="post" class="mb-8 rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
-                <label for="search" class="block text-xl font-bold font-display text-travel-800">Search destinations:</label>
-                <div class="mt-2 flex flex-col gap-3 md:flex-row">
-                    <input type="text" id="search" name="search"  class="w-full flex-1 rounded-lg border border-travel-200 px-2 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
-                    <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
-                </div>
-            </form>
+        <form method="post" class="mb-8 rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
+            <label for="search" class="block text-xl font-bold font-display text-travel-800">Search destinations:</label>
+            <div class="mt-2 flex flex-col gap-3 md:flex-row">
+                <input type="text" id="search" name="search"  class="w-full flex-1 rounded-lg border border-travel-200 px-2 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
+                <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
+            </div>
+        </form>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">    
         <?php
         
         echo ($listMsg);
@@ -276,21 +277,21 @@ if ($destinationResult->num_rows === 0) {
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-            echo ('<article class="destination">');
+            echo ('<article class="destination overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm p-5">');
             // displays the destination name
-            echo (  "<h3>" .
+            echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-3">' .
                     htmlspecialchars(
                         $destination->DestinationName,
                         ENT_QUOTES,
                         "UTF-8"
                     ) .
-                    "</h3>"
+                    "</h2>"
                 );
             //form for delete
 
             if ($destination->ImagePath !== null) {
 
-                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage">');
+                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage w-full h-66 object-cover">');
             }
 
             // displays the success message if status was updated
@@ -298,29 +299,31 @@ if ($destinationResult->num_rows === 0) {
                 echo ($msg);
             }
 
-            echo ("<p>City: " .
-                htmlspecialchars(
-                    $destination->CityName,
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) .
-            "</p>");
+            echo ('<div class="p-5">
+                    <p class="mt-1 text-travel-700">City:   ' .
+                        htmlspecialchars(
+                            $destination->CityName,
+                            ENT_QUOTES,
+                            "UTF-8"
+                        ) .
+                    '</p>');
 
-            echo ("<p>Country: " .
+            echo ('<p class="mt-1 text-travel-700">Country: ' .
                 htmlspecialchars(
                     $destination->CountryName,
                     ENT_QUOTES,
                     "UTF-8"
                 ) .
-            "</p>");
+                    "</p>");
 
-            echo ("<p>Current Status: " .
+            echo ('<p class="mt-1 text-travel-700">Status:  ' .
                 htmlspecialchars(
                     $destination->StatusName,
                     ENT_QUOTES,
                     "UTF-8"
                 ) .
-            "</p>");
+                    "</p>
+                </div>");
 
             echo ('<form method="post">
                         <fieldset>
@@ -377,6 +380,7 @@ if ($destinationResult->num_rows === 0) {
             echo ('</article>');              
         }
     ?>
+    </div>
     </main>
     </body>
 </html>
