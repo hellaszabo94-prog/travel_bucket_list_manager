@@ -259,16 +259,14 @@ if ($destinationResult->num_rows === 0) {
     <main class="max-w-5xl mx-auto px-4 py-8">     
         <div class="mb-8">
             <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">My Destinations</h1>
-            <p class="mt-2 text-travel-800">View and manage your saved travel destinations.</p>
+            <p class="mt-2 font-medium text-travel-800">View and manage your saved travel destinations.</p>
         </div>    
-            <form method="post">
-                <fieldset>
-                <label>
-                    Search destinations:
-                </label>
-                <input type="text" id="search" name="search" placeholder="Destination, city or country" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
-                <button type="submit" name="searchDestination">Search</button>
-                </fieldset>
+            <form method="post" class="mb-8 rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
+                <label for="search" class="block text-xl font-bold font-display text-travel-800">Search destinations:</label>
+                <div class="mt-2 flex flex-col gap-3 md:flex-row">
+                    <input type="text" id="search" name="search"  class="w-full flex-1 rounded-lg border border-travel-200 px-2 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
+                    <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
+                </div>
             </form>
         <?php
         
