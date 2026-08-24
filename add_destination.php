@@ -42,205 +42,218 @@ $msg="";
         <section class="bg-white rounded-xl border border-travel-100 shadow-sm p-6">
             <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-500 bg-clip-text text-transparent ">Add a new destination</h1>
             <form method="post">
-                <label for="country">Country:</label>
-                <input type="text" id="country" name="country" required>
-                <?php
-
-                    // check the country field exists and is not empty.
-                    if(isset($_POST["country"]) && trim($_POST["country"]) !== ""){
-
-                            // remove unnecessary spaces and escapes special characters
-                            $countryfield = $conn->real_escape_string(trim($_POST["country"]));
-
-                            // check the country already exists in the database
-                            $sql = "
-                            SELECT IDCountry
-                            FROM tbl_country
-                            WHERE(
-                                CountryName='" . $countryfield . "'
-                            )
-                            ";
-
-                            $countryResult = dbQuery($conn,$sql);
-
-                            // if the country does not exist, create a new
-                            if($countryResult->num_rows===0){
-
-                                $sql="
-                                        INSERT INTO tbl_country
-                                            (CountryName)
-                                        VALUES (
-                                        '" . $countryfield . "'
-                                        )
-                                ";
-                                
-                                $countryOk = dbQuery($conn,$sql);
-
-                                if($countryOk){
-                                    // save the ID of the newly created country
-                                    $countryID = $conn->insert_id;
-
-                                    echo($msg='<p class="success">Country saved.</p>');
-
-                                }
-                            
-                            }
-                            else{
-                                // if the country already exists, get ID from the database.
-                                $country = dbFetch($countryResult);
-
-                                $countryID = $country->IDCountry;
-                            }
-                    }
-                ?>   
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" required>
-                <?php
-                        if(isset($_POST["city"]) && trim($_POST["city"]) !== ""){
-
-                            $cityfield = $conn->real_escape_string(trim($_POST["city"]));
-
-                            // check the city already exists in the selected country
-
-                            $sql = "
-                            SELECT IDCity
-                            FROM tbl_city
-                            WHERE(
-                                CityName ='" . $cityfield . "'
-                                AND FIDCountry = " . $countryID . "
-
-                            )
-                            ";
-
-                            $cityResult = dbQuery($conn,$sql);
-
-                            // if the city does not exist, create a new
-
-                            if($cityResult->num_rows===0){
-
-                                $sql="
-                                        INSERT INTO tbl_city
-                                            (CityName, FIDCountry )
-                                        VALUES (
-                                        '" . $cityfield . "',
-                                        " . $countryID . " 
-                                        )
-                                ";
-
-                                $cityOk = dbQuery($conn,$sql);
-
-                                if($cityOk){
-                                    // saves the ID of the newly created city
-                                    $cityID = $conn->insert_id;
-
-                                    echo($msg='<p class="success"> City saved.</p>');
-                                }
-                            }
-                            else{
-                                // if the city already exists, get its ID from the database
-                                
-                                $city = dbFetch($cityResult);
-                                
-                                $cityID = $city->IDCity;
-
-                            }
-                        }
-                    ?>   
-
-                    <label for="destination">Destination:</label>
-                    <input type="text" id="destination" name="destination" required>
-            
-                    <label for="status">Status:</label>
+                <div class="mt-6">
+                    <label for="country" class="block font-display font-bold text-travel-800">Country:</label>
+                    <input type="text" id="country" name="country" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2" required>
                     <?php
-                            // loads all available statuses from the database
 
-                            $sql="
-                                SELECT
-                                    IDStatus,
-                                    StatusName
-                                FROM tbl_status
-                                ORDER BY IDStatus ASC   
-                            ";
-                            $status = dbQuery($conn,$sql);
+                        // check the country field exists and is not empty.
+                        if(isset($_POST["country"]) && trim($_POST["country"]) !== ""){
 
-                            // creates a radio button for every status 
-                            while($statusResult = dbFetch($status)){
-                            
-                                echo ('<input type="radio" name="typeOfStatus" value="' . $statusResult->IDStatus . '" required>
+                                // remove unnecessary spaces and escapes special characters
+                                $countryfield = $conn->real_escape_string(trim($_POST["country"]));
 
-                                        <label>' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
-                            }
-
-                            $statusID = null;
-
-                            // shows an error if no status was selected
-                            if (!isset($_POST["typeOfStatus"])) {
-
-                                    $msg = '<p class="error">Please select a status.</p>';
-
-                            } else {
-                                    // converts the selected status ID into an integer
-                                    $statusID = (int) $_POST["typeOfStatus"];
-                            }
-                            
-                        ?>
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description"></textarea>
-                        <?php
-                            // checks the destination field exists and is not empty
-
-                            if(isset($_POST["destination"]) && trim($_POST["destination"]) !== "" && $statusID !== null){
-                                // prepares the optional description for the SQL query
-                                $destinationfield =$conn->real_escape_string(trim($_POST["destination"]));
-
-                                $descriptionfield = $conn->real_escape_string($_POST["description"]);
-                                // gets the currently logged-in user's ID from the session
-                                $userID = (int) $_SESSION["userID"];
-                                // checks the destination is already saved by the current user
+                                // check the country already exists in the database
                                 $sql = "
-                                SELECT IDDestination
-                                FROM tbl_destination
+                                SELECT IDCountry
+                                FROM tbl_country
                                 WHERE(
-                                    DestinationName ='" . $destinationfield . "'
-                                    AND FIDCity = " . $cityID . "
-                                    AND FIDUser = " . $userID ."
+                                    CountryName='" . $countryfield . "'
                                 )
                                 ";
 
-                                $destinationResult = dbQuery($conn,$sql);
+                                $countryResult = dbQuery($conn,$sql);
 
-                                // creates the destination if it is not already exist
-                                if($destinationResult->num_rows==0){
+                                // if the country does not exist, create a new
+                                if($countryResult->num_rows===0){
 
-                                    // saves the destination
                                     $sql="
-                                            INSERT INTO tbl_destination
-                                                (DestinationName, Description, FIDCity, FIDStatus, FIDUser)
+                                            INSERT INTO tbl_country
+                                                (CountryName)
                                             VALUES (
-                                            '" . $destinationfield . "',
-                                            '" . $descriptionfield . "',
-                                            " . $cityID . ",
-                                            " . $statusID . ",
-                                            " . $userID . "
+                                            '" . $countryfield . "'
                                             )
                                     ";
+                                    
+                                    $countryOk = dbQuery($conn,$sql);
 
-                                    $destinationOk = dbQuery($conn,$sql);
+                                    if($countryOk){
+                                        // save the ID of the newly created country
+                                        $countryID = $conn->insert_id;
 
-                                    if($destinationOk){
-                                        // saves the ID of the newly created destination
-                                        $destinationID = $conn->insert_id;
+                                        echo($msg='<p class="success">Country saved.</p>');
 
-                                        echo($msg='<p class="success"> Destination saved.</p>');
                                     }
                                 
                                 }
                                 else{
-                                    echo($msg='<p class="error"> Destination already exists in the system.</p>');
+                                    // if the country already exists, get ID from the database.
+                                    $country = dbFetch($countryResult);
+
+                                    $countryID = $country->IDCountry;
+                                }
+                        }
+                    ?>
+                </div> 
+                <div class="mt-6">  
+                    <label for="city" class="block font-display font-bold text-travel-800">City:</label>
+                    <input type="text" id="city" name="city" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2" required>
+                    <?php
+                            if(isset($_POST["city"]) && trim($_POST["city"]) !== ""){
+
+                                $cityfield = $conn->real_escape_string(trim($_POST["city"]));
+
+                                // check the city already exists in the selected country
+
+                                $sql = "
+                                SELECT IDCity
+                                FROM tbl_city
+                                WHERE(
+                                    CityName ='" . $cityfield . "'
+                                    AND FIDCountry = " . $countryID . "
+
+                                )
+                                ";
+
+                                $cityResult = dbQuery($conn,$sql);
+
+                                // if the city does not exist, create a new
+
+                                if($cityResult->num_rows===0){
+
+                                    $sql="
+                                            INSERT INTO tbl_city
+                                                (CityName, FIDCountry )
+                                            VALUES (
+                                            '" . $cityfield . "',
+                                            " . $countryID . " 
+                                            )
+                                    ";
+
+                                    $cityOk = dbQuery($conn,$sql);
+
+                                    if($cityOk){
+                                        // saves the ID of the newly created city
+                                        $cityID = $conn->insert_id;
+
+                                        echo($msg='<p class="success"> City saved.</p>');
+                                    }
+                                }
+                                else{
+                                    // if the city already exists, get its ID from the database
+                                    
+                                    $city = dbFetch($cityResult);
+                                    
+                                    $cityID = $city->IDCity;
+
                                 }
                             }
-                        ?>  
-                    <button type="submit" name="saveDestination">Save destination</button>
+                        ?>   
+                    </div>
+                    <div class="mt-6">
+                        <label for="destination" class="block font-display font-bold text-travel-800">Destination:</label>
+                        <input type="text" id="destination" name="destination" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2" required>
+                        <div class="mt-6">
+                            <p class=" font-bold font-display text-travel-800">Status:</p>
+
+                            <div class="mt-3 flex flex-col gap-2">
+                            <?php
+                                    // loads all available statuses from the database
+
+                                    $sql="
+                                        SELECT
+                                            IDStatus,
+                                            StatusName
+                                        FROM tbl_status
+                                        ORDER BY IDStatus ASC   
+                                    ";
+                                    $status = dbQuery($conn,$sql);
+
+                                    // creates a radio button for every status 
+                                    while($statusResult = dbFetch($status)){
+                                    
+                                        echo ('<label class="flex items-center gap-2 cursor-pointer">
+
+                                                <input type="radio" name="typeOfStatus" class="accent-travel-600" value="' . $statusResult->IDStatus . '" required>
+
+                                                <label  class="text-travel-800">' . htmlspecialchars($statusResult->StatusName, ENT_QUOTES,"UTF-8") . '</label>');
+                                    }
+
+                                    $statusID = null;
+
+                                    // shows an error if no status was selected
+                                    if (!isset($_POST["typeOfStatus"])) {
+
+                                            $msg = '<p class="error">Please select a status.</p>';
+
+                                    } else {
+                                            // converts the selected status ID into an integer
+                                            $statusID = (int) $_POST["typeOfStatus"];
+                                    }
+                                    
+                                ?>
+                            </div> 
+                        </div> 
+                    </div>
+                    <div class="mt-6">        
+                        <label for="description" class="block font-display font-bold text-travel-800">Description:</label>
+                        <textarea id="description" name="description" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2"></textarea>
+                            <?php
+                                // checks the destination field exists and is not empty
+
+                                if(isset($_POST["destination"]) && trim($_POST["destination"]) !== "" && $statusID !== null){
+                                    // prepares the optional description for the SQL query
+                                    $destinationfield =$conn->real_escape_string(trim($_POST["destination"]));
+
+                                    $descriptionfield = $conn->real_escape_string($_POST["description"]);
+                                    // gets the currently logged-in user's ID from the session
+                                    $userID = (int) $_SESSION["userID"];
+                                    // checks the destination is already saved by the current user
+                                    $sql = "
+                                    SELECT IDDestination
+                                    FROM tbl_destination
+                                    WHERE(
+                                        DestinationName ='" . $destinationfield . "'
+                                        AND FIDCity = " . $cityID . "
+                                        AND FIDUser = " . $userID ."
+                                    )
+                                    ";
+
+                                    $destinationResult = dbQuery($conn,$sql);
+
+                                    // creates the destination if it is not already exist
+                                    if($destinationResult->num_rows==0){
+
+                                        // saves the destination
+                                        $sql="
+                                                INSERT INTO tbl_destination
+                                                    (DestinationName, Description, FIDCity, FIDStatus, FIDUser)
+                                                VALUES (
+                                                '" . $destinationfield . "',
+                                                '" . $descriptionfield . "',
+                                                " . $cityID . ",
+                                                " . $statusID . ",
+                                                " . $userID . "
+                                                )
+                                        ";
+
+                                        $destinationOk = dbQuery($conn,$sql);
+
+                                        if($destinationOk){
+                                            // saves the ID of the newly created destination
+                                            $destinationID = $conn->insert_id;
+
+                                            echo($msg='<p class="success"> Destination saved.</p>');
+                                        }
+                                    
+                                    }
+                                    else{
+                                        echo($msg='<p class="error"> Destination already exists in the system.</p>');
+                                    }
+                                }
+                            ?> 
+                    </div>     
+                    <button type="submit" class="mt-6 font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="saveDestination">Save destination</button>
                 </form>
             </section>        
         </main>
