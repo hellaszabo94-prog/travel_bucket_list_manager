@@ -323,12 +323,23 @@ if ($destinationResult->num_rows === 0) {
                     "UTF-8"
                 ) .
                     "</p>
-                </div>");
+                ");
+            
+            echo ('<p class="mt-4 text-travel-800 leading-relaxed">' .
+                htmlspecialchars(
+                   $destination->Description,
+                    ENT_QUOTES,
+                    "UTF-8"
+                ) .
+                    "</p>
+                </div>");    
 
-            echo ('<form method="post">
+            echo ('
+                    <form method="post">
                         <fieldset>
-                            <legend>Change status</legend>
-                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '"> 
+                            <legend class="font-display font-bold text-travel-900">Change status</legend>
+                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
+                            <div class="mt-3 flex flex-col gap-2">
                 ');
 
             // creates a radio button for every status 
@@ -338,23 +349,20 @@ if ($destinationResult->num_rows === 0) {
 
                 $checked = ($destination->FIDStatus === $status->IDStatus) ? " checked" : "";
     
-                    echo ('<input type="radio" id="'. $radioID .'" name="typeOfStatus" value="' . $status->IDStatus . '"' . $checked . 'required >
-                                <label for="' . $radioID . '">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . '</label>
+                    echo ('
+                                <input type="radio" id="'. $radioID .'" name="typeOfStatus" class="accent-travel-600" value="' . $status->IDStatus . '"' . $checked . 'required >
+                                <label class="flex items-center gap-2 cursor-pointer" for="' . $radioID . '">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . '</label>
                         ');
             }
 
-            echo ('     </fieldset>
+            echo ('         </div>
+                        </fieldset>
                             <button type="submit" name="changeStatus">Change status</button>
-                    </form>
+                        </form>
                 ');
-            echo ('
-                <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
-                    <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
-                        <button type="submit" name="deleteDestination">
-                            Delete destination
-                        </button>
-                </form>
-            ');  
+
+            echo ('<div class="mt-6 flex flex-wrap gap-3">');
+
             if ($destination->ImagePath === null) {
                 // no image shows upload button   
                 echo ('
@@ -376,7 +384,19 @@ if ($destinationResult->num_rows === 0) {
                     </form>
                 ');
 
-            }    
+            }
+            echo ('
+                    <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
+                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
+                            <button type="submit" name="deleteDestination">
+                                Delete destination
+                            </button>
+                    </form>
+                
+            ');
+
+            echo ('</div>');
+                  
             echo ('</article>');              
         }
     ?>
