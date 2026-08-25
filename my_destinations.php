@@ -357,7 +357,7 @@ if ($destinationResult->num_rows === 0) {
 
             echo ('         </div>
                         </fieldset>
-                            <button type="submit" name="changeStatus">Change status</button>
+                            <button type="submit" class="mt-4 bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:text-travel-500 duration-200 cursor-pointer" name="changeStatus">Change status</button>
                         </form>
                 ');
 
@@ -368,7 +368,7 @@ if ($destinationResult->num_rows === 0) {
                 echo ('
                     <form method="post" action="upload_image.php" >
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" name="openImageUpload">
+                            <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="openImageUpload">
                                 Upload photo
                             </button>
                     </form>
@@ -378,7 +378,7 @@ if ($destinationResult->num_rows === 0) {
                 echo ('
                     <form method="post" action="upload_image.php" >
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" name="changeImage">
+                            <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="changeImage">
                                 Edit image
                             </button>
                     </form>
@@ -388,7 +388,7 @@ if ($destinationResult->num_rows === 0) {
             echo ('
                     <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
-                            <button type="submit" name="deleteDestination">
+                            <button type="submit" name="deleteDestination" class="bg-red-500 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-red-600 transition cursor-pointer">
                                 Delete destination
                             </button>
                     </form>
