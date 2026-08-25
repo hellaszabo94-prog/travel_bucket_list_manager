@@ -277,7 +277,7 @@ if ($destinationResult->num_rows === 0) {
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-            echo ('<article class="overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full">');
+            echo ('<article class="overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
             // displays the destination name
             echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-3">' .
                     htmlspecialchars(
