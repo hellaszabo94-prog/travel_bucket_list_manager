@@ -277,7 +277,7 @@ if ($destinationResult->num_rows === 0) {
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-            echo ('<article class="destination overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm p-5">');
+            echo ('<article class="overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full">');
             // displays the destination name
             echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-3">' .
                     htmlspecialchars(
@@ -299,7 +299,7 @@ if ($destinationResult->num_rows === 0) {
                 echo ($msg);
             }
 
-            echo ('<div class="p-5">
+            echo ('<div class="p-5 flex flex-col flex-1">
                     <p class="mt-1 text-travel-700">City:   ' .
                         htmlspecialchars(
                             $destination->CityName,
@@ -361,7 +361,7 @@ if ($destinationResult->num_rows === 0) {
                         </form>
                 ');
 
-            echo ('<div class="mt-6 flex flex-wrap gap-3">');
+            echo ('<div class="mt-auto pt-6 flex flex-wrap gap-3">');
 
             if ($destination->ImagePath === null) {
                 // no image shows upload button   
