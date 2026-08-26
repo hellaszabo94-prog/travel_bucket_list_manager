@@ -336,7 +336,7 @@ if ($destinationResult->num_rows === 0) {
 
             echo ('
                     <form method="post">
-                        <fieldset>
+                        <fieldset class="rounded-lg bg-travel-50 p-4">
                             <legend class="font-display font-bold text-travel-900">Change status</legend>
                             <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
                             <div class="mt-3 flex flex-col gap-2">
@@ -350,8 +350,10 @@ if ($destinationResult->num_rows === 0) {
                 $checked = ($destination->FIDStatus === $status->IDStatus) ? " checked" : "";
     
                     echo ('
-                                <input type="radio" id="'. $radioID .'" name="typeOfStatus" class="accent-travel-600" value="' . $status->IDStatus . '"' . $checked . 'required >
-                                <label class="flex items-center gap-2 cursor-pointer" for="' . $radioID . '">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . '</label>
+                                <label  class="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-travel-100 transition" for="' . $radioID . '"> 
+                                    <input type="radio" id="'. $radioID .'" name="typeOfStatus" class="accent-travel-600" value="' . $status->IDStatus . '"' . $checked . 'required > 
+                                    <span class="text-travel-800">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . ' </span> 
+                                </label>
                         ');
             }
 
