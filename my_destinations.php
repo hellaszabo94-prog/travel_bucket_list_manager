@@ -214,11 +214,19 @@ if ($destinationResult->num_rows === 0) {
 
     if ($isSearching) {
 
-        $listMsg='<p class="info">No destinations found.</p>';
+        $listMsg='  <div class="col-span-full mb-8 w-full rounded-xl border border-travel-200 bg-white p-6 text-center shadow-sm">
+                        <h2 class="info font-display text-xl font-bold text-travel-900">No destinations found.</h2>
+                        <p class="mt-2 text-travel-700">Try another destination, city or country.</p>
+                    </div>
+                    ';
         
     } else {
 
-        $listMsg='<p class="info">You haven\'t added any destinations yet. Add your first destination.</p>';
+        $listMsg='  <div class="col-span-full mb-8 w-full  rounded-xl border border-travel-200 bg-travel-50 p-6 text-center">
+                        <h2 class="info font-display text-xl font-bold text-travel-900">No destinations yet</h2>
+                        <p class="mt-2 text-travel-700">Start building your travel bucket list by adding your first destination.</p>
+                    </div>
+                    ';
 
     }
 
