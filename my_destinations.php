@@ -285,7 +285,7 @@ if ($destinationResult->num_rows === 0) {
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
-            echo ('<article class="overflow-hidden rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
+            echo ('<article class="overflow-hidden px-3 py-3 rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
             // displays the destination name
             echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-3">' .
                     htmlspecialchars(
@@ -299,7 +299,14 @@ if ($destinationResult->num_rows === 0) {
 
             if ($destination->ImagePath !== null) {
 
-                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage w-full h-66 object-cover">');
+                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage w-full h-66 object-cover border-3 border-travel-600 rounded-lg">');
+
+            } else {
+
+                echo('<div class="h-66 w-full bg-travel-100 flex items-center justify-center border-3 border-travel-600 rounded-lg">
+                        <p class="font-display font-bold text-travel-500"> No photo yet </p>
+                    </div>');
+
             }
 
             // displays the success message if status was updated
@@ -308,7 +315,7 @@ if ($destinationResult->num_rows === 0) {
             }
 
             echo ('<div class="p-5 flex flex-col flex-1">
-                    <p class="mt-1 text-travel-700">City:   ' .
+                    <p class="mt-1 font-display font-bold text-travel-700">City:   ' .
                         htmlspecialchars(
                             $destination->CityName,
                             ENT_QUOTES,
@@ -316,7 +323,7 @@ if ($destinationResult->num_rows === 0) {
                         ) .
                     '</p>');
 
-            echo ('<p class="mt-1 text-travel-700">Country: ' .
+            echo ('<p class="mt-1 font-display font-bold text-travel-700">Country: ' .
                 htmlspecialchars(
                     $destination->CountryName,
                     ENT_QUOTES,
@@ -324,7 +331,7 @@ if ($destinationResult->num_rows === 0) {
                 ) .
                     "</p>");
 
-            echo ('<p class="mt-1 text-travel-700">Status:  ' .
+            echo ('<p class="mt-1 font-display font-bold text-travel-700">Status:  ' .
                 htmlspecialchars(
                     $destination->StatusName,
                     ENT_QUOTES,
@@ -344,10 +351,10 @@ if ($destinationResult->num_rows === 0) {
 
             echo ('
                     <form method="post">
-                        <fieldset class="rounded-lg bg-travel-50 p-4">
-                            <legend class="font-display font-bold text-travel-900">Change status</legend>
+                        <fieldset class="rounded-lg bg-travel-50 p-3">
+                            <h3 class="font-display font-bold text-travel-900">Change status</h3>
                             <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
-                            <div class="mt-3 flex flex-col gap-2">
+                            <div class="mt-5 flex flex-col gap-2">
                 ');
 
             // creates a radio button for every status 
