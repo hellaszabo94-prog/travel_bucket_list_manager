@@ -340,7 +340,7 @@ if ($destinationResult->num_rows === 0) {
                     "</p>
                 ");
             
-            echo ('<p class="mt-4 text-travel-800 leading-relaxed">' .
+            echo ('<p class="mt-4 text-travel-800 leading-relaxed line-clamp-3 whitespace-normal break-words">' .
                 htmlspecialchars(
                    $destination->Description,
                     ENT_QUOTES,

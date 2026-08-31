@@ -196,8 +196,8 @@ $msg="";
                         </div> 
                     </div>
                     <div class="mt-6">        
-                        <label for="description" class="block font-display font-bold text-travel-800">Description:</label>
-                        <textarea id="description" name="description" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2"></textarea>
+                        <label for="description" class="block font-display font-bold text-travel-800">Description (max. 250 characters)</label>
+                        <textarea id="description" name="description" maxlength="250" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2"></textarea>
                             <?php
                                 // checks the destination field exists and is not empty
 
