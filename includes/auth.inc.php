@@ -9,7 +9,7 @@ session_start();
 
 if(!(isset($_SESSION["successLogin"]) && $_SESSION["successLogin"]===true)){
 
-    header("Location: log.php");
+    header("Location: index.php");
     
     exit;
 }

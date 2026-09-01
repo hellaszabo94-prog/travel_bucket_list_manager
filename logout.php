@@ -18,7 +18,7 @@
     // destroy the session completely
     session_destroy();
     // redirect the user to the login page
-    header("Location: log.php");
+    header("Location: index.php");
 
     exit;
 

@@ -96,7 +96,7 @@ if(count($_POST)>0){
 
 if(isset($_POST["logButton"])){
     
-    header("Location: log.php");
+    header("Location: index.php");
 
 }
 
