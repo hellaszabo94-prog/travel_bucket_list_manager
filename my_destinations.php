@@ -38,7 +38,7 @@ if (isset($_POST["changeStatus"]) && isset($_POST["typeOfStatus"]) && isset($_PO
     $statusOk = dbQuery($conn, $sql);
 
     if ($statusOk) {
-        $msg = '<p class="success">Status updated successfully.</p>';
+        $msg = '<p class="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-700">Status updated successfully.</p>';
         
         //remembers which destination was updated.
         $updatedDestinationID = $destinationID;
@@ -95,11 +95,11 @@ if (isset($_POST["deleteDestination"]) && isset($_POST["destinationID"])) {
             }
         }
 
-        $deleteMsg = '<p class="success">Destination deleted successfully.</p>';
+        $deleteMsg = '<p class="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-700">Destination deleted successfully.</p>';
 
     } else{
 
-        $deleteMsg = '<p class="error">The destination could not be deleted.</p>';
+        $deleteMsg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The destination could not be deleted.</p>';
 
     }
 }
@@ -276,18 +276,20 @@ if ($destinationResult->num_rows === 0) {
                 <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
             </div>
         </form>
+        <div class="mb-6">
+            <?php echo ($deleteMsg); ?>
+        </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">    
         <?php
         
         echo ($listMsg);
-        echo ($deleteMsg);
 
         // goes through all destinations returned by the query
         while ($destination = dbFetch($destinationResult)) {
 
             echo ('<article class="overflow-hidden px-3 py-3 rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
             // displays the destination name
-            echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-3">' .
+            echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-1">' .
                     htmlspecialchars(
                         $destination->DestinationName,
                         ENT_QUOTES,

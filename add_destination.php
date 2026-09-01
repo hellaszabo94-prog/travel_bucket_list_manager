@@ -81,7 +81,7 @@ $msg="";
                                         // save the ID of the newly created country
                                         $countryID = $conn->insert_id;
 
-                                        echo($msg='<p class="success">Country saved.</p>');
+                                        echo($msg='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800">Country saved.</p>');
 
                                     }
                                 
@@ -136,7 +136,7 @@ $msg="";
                                         // saves the ID of the newly created city
                                         $cityID = $conn->insert_id;
 
-                                        echo($msg='<p class="success"> City saved.</p>');
+                                        echo($msg='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800"> City saved.</p>');
                                     }
                                 }
                                 else{
@@ -184,7 +184,7 @@ $msg="";
                                     // shows an error if no status was selected
                                     if (!isset($_POST["typeOfStatus"])) {
 
-                                            $msg = '<p class="error">Please select a status.</p>';
+                                            $msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">Please select a status.</p>';
 
                                     } else {
                                             // converts the selected status ID into an integer
@@ -243,12 +243,12 @@ $msg="";
                                             // saves the ID of the newly created destination
                                             $destinationID = $conn->insert_id;
 
-                                            echo($msg='<p class="success"> Destination saved.</p>');
+                                            echo($msg='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800"> Destination saved.</p>');
                                         }
                                     
                                     }
                                     else{
-                                        echo($msg='<p class="error"> Destination already exists in the system.</p>');
+                                        echo($msg='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700"> Destination already exists in the system.</p>');
                                     }
                                 }
                             ?> 
