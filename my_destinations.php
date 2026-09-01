@@ -249,177 +249,182 @@ if ($destinationResult->num_rows === 0) {
     </head>
     <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-100 text-travel-950">
          <header class="bg-white border-b border-travel-100 shadow-sm">
-        <nav id="mobile" class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 md:gap-8">
-            <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-start md:self-auto">
-            <button type="button" id="navRwd" class="ml-auto flex h-10 w-10 items-center justify-center rounded-lg bg-travel-100 hover:bg-travel-200 transition md:hidden cursor-pointer">
-                <img id="menuIcon" class="h-6 w-6" src="./svg/menu.svg">
-                <img id="closeIcon" class="hidden h-6 w-6" src="./svg/close.svg">
-            </button>
-            <ul class="hidden w-full flex-col gap-3 md:flex md:w-auto md:flex-row md:gap-6">
-                <li><a href="dashboard.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Home</a></li>
-                <li><a href="add_destination.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Add a new destination</a></li>
-                <li><a href="my_destinations.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">My Destinations</a></li>
-                <li class="md:hidden"><a href="logout.php" class="inline-block bg-travel-800 text-white font-display font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a></li>
-            </ul>
-            <a href="logout.php" class="hidden md:inline-block font-display md:ml-auto bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a>
-        </nav>
-    </header>
-    <main class="max-w-5xl mx-auto px-4 py-8">     
-        <div class="mb-8">
-            <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">My Destinations</h1>
-            <p class="mt-2 font-medium text-travel-800">View and manage your saved travel destinations.</p>
-        </div>    
-        <form method="post" class="mb-8 rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
-            <label for="search" class="block text-xl font-bold font-display text-travel-800">Search destinations:</label>
-            <div class="mt-2 flex flex-col gap-3 md:flex-row">
-                <input type="text" id="search" name="search"  class="w-full flex-1 rounded-lg border border-travel-200 px-2 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
-                <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
+            <nav id="mobile" class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 md:gap-8">
+                <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-start md:self-auto">
+                <button type="button" id="navRwd" class="ml-auto flex h-10 w-10 items-center justify-center rounded-lg bg-travel-100 hover:bg-travel-200 transition md:hidden cursor-pointer">
+                    <img id="menuIcon" class="h-6 w-6" src="./svg/menu.svg">
+                    <img id="closeIcon" class="hidden h-6 w-6" src="./svg/close.svg">
+                </button>
+                <ul class="hidden w-full flex-col gap-3 md:flex md:w-auto md:flex-row md:gap-6">
+                    <li><a href="dashboard.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Home</a></li>
+                    <li><a href="add_destination.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">Add a new destination</a></li>
+                    <li><a href="my_destinations.php" class="font-display font-bold text-travel-800 hover:text-travel-600 hover:underline underline-offset-8 transition">My Destinations</a></li>
+                    <li class="md:hidden"><a href="logout.php" class="inline-block bg-travel-800 text-white font-display font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a></li>
+                </ul>
+                <a href="logout.php" class="hidden md:inline-block font-display md:ml-auto bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-travel-600 transition">Log out</a>
+            </nav>
+        </header>
+        <main class="max-w-5xl mx-auto px-4 py-8">     
+            <div class="mb-8">
+                <h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">My Destinations</h1>
+                <p class="mt-2 font-medium text-travel-800">View and manage your saved travel destinations.</p>
+            </div>    
+            <form method="post" class="mb-8 rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
+                <label for="search" class="block text-xl font-bold font-display text-travel-800">Search destinations:</label>
+                <div class="mt-2 flex flex-col gap-3 md:flex-row">
+                    <input type="text" id="search" name="search"  class="w-full flex-1 rounded-lg border border-travel-200 px-2 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" value="<?= isset($_POST["search"])? htmlspecialchars($_POST["search"],ENT_QUOTES,"UTF-8"): ""?>">
+                    <button type="submit" class=" font-display bg-gradient-to-b from-travel-800 to-travel-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/50 transition-all duration-200 cursor-pointer" name="searchDestination">Search</button>
+                </div>
+            </form>
+            <div class="mb-6">
+                <?php echo ($deleteMsg); ?>
             </div>
-        </form>
-        <div class="mb-6">
-            <?php echo ($deleteMsg); ?>
-        </div>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">    
-        <?php
-        
-        echo ($listMsg);
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">    
+            <?php
+            
+            echo ($listMsg);
 
-        // goes through all destinations returned by the query
-        while ($destination = dbFetch($destinationResult)) {
+            // goes through all destinations returned by the query
+            while ($destination = dbFetch($destinationResult)) {
 
-            echo ('<article class="overflow-hidden px-3 py-3 rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
-            // displays the destination name
-            echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-1">' .
-                    htmlspecialchars(
-                        $destination->DestinationName,
-                        ENT_QUOTES,
-                        "UTF-8"
-                    ) .
-                    "</h2>"
-                );
-            //form for delete
-
-            if ($destination->ImagePath !== null) {
-
-                echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage w-full h-66 object-cover border-3 border-travel-600 rounded-lg">');
-
-            } else {
-
-                echo('<div class="h-66 w-full bg-travel-100 flex items-center justify-center border-3 border-travel-600 rounded-lg">
-                        <p class="font-display font-bold text-travel-500"> No photo yet </p>
-                    </div>');
-
-            }
-
-            // displays the success message if status was updated
-            if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {
-                echo ($msg);
-            }
-
-            echo ('<div class="p-5 flex flex-col flex-1">
-                    <p class="mt-1 font-display font-bold text-travel-700">City:   ' .
+                echo ('<article class="overflow-hidden px-3 py-3 rounded-xl border border-travel-100 bg-white shadow-sm flex flex-col h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-200">');
+                // displays the destination name
+                echo (  '<h2 class="font-display text-2xl font-bold text-travel-800 py-1">' .
                         htmlspecialchars(
-                            $destination->CityName,
+                            $destination->DestinationName,
                             ENT_QUOTES,
                             "UTF-8"
                         ) .
-                    '</p>');
+                        "</h2>"
+                    );
+                //form for delete
 
-            echo ('<p class="mt-1 font-display font-bold text-travel-700">Country: ' .
-                htmlspecialchars(
-                    $destination->CountryName,
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) .
-                    "</p>");
+                if ($destination->ImagePath !== null) {
 
-            echo ('<p class="mt-1 font-display font-bold text-travel-700">Status:  ' .
-                htmlspecialchars(
-                    $destination->StatusName,
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) .
-                    "</p>
-                ");
-            
-            echo ('<p class="mt-4 text-travel-800 leading-relaxed line-clamp-3 whitespace-normal break-words">' .
-                htmlspecialchars(
-                   $destination->Description,
-                    ENT_QUOTES,
-                    "UTF-8"
-                ) .
-                    "</p>
-                </div>");    
+                    echo('<img src="' . htmlspecialchars($destination->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage w-full h-66 object-cover border-3 border-travel-600 rounded-lg">');
 
-            echo ('
-                    <form method="post">
-                        <fieldset class="rounded-lg bg-travel-50 p-3">
-                            <h3 class="font-display font-bold text-travel-900">Change status</h3>
-                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
-                            <div class="mt-5 flex flex-col gap-2">
-                ');
+                } else {
 
-            // creates a radio button for every status 
-            foreach ($statuses as $status){
+                    echo('<div class="h-66 w-full bg-travel-100 flex items-center justify-center border-3 border-travel-600 rounded-lg">
+                            <p class="font-display font-bold text-travel-500"> No photo yet </p>
+                        </div>');
 
-                $radioID ="status-" .  $destination->IDDestination . "-" . $status->IDStatus;
+                }
 
-                $checked = ($destination->FIDStatus === $status->IDStatus) ? " checked" : "";
-    
-                    echo ('
-                                <label  class="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-travel-100 transition" for="' . $radioID . '"> 
-                                    <input type="radio" id="'. $radioID .'" name="typeOfStatus" class="accent-travel-600" value="' . $status->IDStatus . '"' . $checked . 'required > 
-                                    <span class="text-travel-800">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . ' </span> 
-                                </label>
-                        ');
-            }
+                // displays the success message if status was updated
+                if ($updatedDestinationID !== null && $destination->IDDestination === $updatedDestinationID) {
+                    echo ($msg);
+                }
 
-            echo ('         </div>
-                        </fieldset>
-                            <button type="submit" class="mt-4 bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:text-travel-500 duration-200 cursor-pointer" name="changeStatus">Change status</button>
-                        </form>
-                ');
+                echo ('<div class="p-5 flex flex-col flex-1">
+                        <p class="mt-1 font-display font-bold text-travel-700">City:   ' .
+                            htmlspecialchars(
+                                $destination->CityName,
+                                ENT_QUOTES,
+                                "UTF-8"
+                            ) .
+                        '</p>');
 
-            echo ('<div class="mt-auto pt-6 flex flex-wrap gap-3">');
+                echo ('<p class="mt-1 font-display font-bold text-travel-700">Country: ' .
+                    htmlspecialchars(
+                        $destination->CountryName,
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ) .
+                        "</p>");
 
-            if ($destination->ImagePath === null) {
-                // no image shows upload button   
-                echo ('
-                    <form method="post" action="upload_image.php" >
-                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="openImageUpload">
-                                Upload photo
-                            </button>
-                    </form>
-                ');
-            } else{
-                // image already exists shows edit image button what send me to the upload images site
-                echo ('
-                    <form method="post" action="upload_image.php" >
-                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="changeImage">
-                                Edit image
-                            </button>
-                    </form>
-                ');
-
-            }
-            echo ('
-                    <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
-                        <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
-                            <button type="submit" name="deleteDestination" class="bg-red-500 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-red-600 transition cursor-pointer">
-                                Delete destination
-                            </button>
-                    </form>
+                echo ('<p class="mt-1 font-display font-bold text-travel-700">Status:  ' .
+                    htmlspecialchars(
+                        $destination->StatusName,
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ) .
+                        "</p>
+                    ");
                 
-            ');
+                echo ('<p class="mt-4 text-travel-800 leading-relaxed line-clamp-3 whitespace-normal break-words">' .
+                    htmlspecialchars(
+                    $destination->Description,
+                        ENT_QUOTES,
+                        "UTF-8"
+                    ) .
+                        "</p>
+                    </div>");    
 
-            echo ('</div>');
-                  
-            echo ('</article>');              
-        }
-    ?>
-    </div>
-    </main>
+                echo ('
+                        <form method="post">
+                            <fieldset class="rounded-lg bg-travel-50 p-3">
+                                <h3 class="font-display font-bold text-travel-900">Change status</h3>
+                                <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
+                                <div class="mt-5 flex flex-col gap-2">
+                    ');
+
+                // creates a radio button for every status 
+                foreach ($statuses as $status){
+
+                    $radioID ="status-" .  $destination->IDDestination . "-" . $status->IDStatus;
+
+                    $checked = ($destination->FIDStatus === $status->IDStatus) ? " checked" : "";
+        
+                        echo ('
+                                    <label  class="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-travel-100 transition" for="' . $radioID . '"> 
+                                        <input type="radio" id="'. $radioID .'" name="typeOfStatus" class="accent-travel-600" value="' . $status->IDStatus . '"' . $checked . 'required > 
+                                        <span class="text-travel-800">' . htmlspecialchars($status->StatusName,ENT_QUOTES,"UTF-8") . ' </span> 
+                                    </label>
+                            ');
+                }
+
+                echo ('         </div>
+                            </fieldset>
+                                <button type="submit" class="mt-4 bg-travel-800 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:text-travel-500 duration-200 cursor-pointer" name="changeStatus">Change status</button>
+                            </form>
+                    ');
+
+                echo ('<div class="mt-auto pt-6 flex flex-wrap gap-3">');
+
+                if ($destination->ImagePath === null) {
+                    // no image shows upload button   
+                    echo ('
+                        <form method="post" action="upload_image.php" >
+                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                                <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="openImageUpload">
+                                    Upload photo
+                                </button>
+                        </form>
+                    ');
+                } else{
+                    // image already exists shows edit image button what send me to the upload images site
+                    echo ('
+                        <form method="post" action="upload_image.php" >
+                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
+                                <button type="submit" class="bg-travel-100 text-travel-900 font-bold px-4 py-2 rounded-lg border border-travel-200 hover:bg-travel-200 transition cursor-pointer" name="changeImage">
+                                    Edit image
+                                </button>
+                        </form>
+                    ');
+
+                }
+                echo ('
+                        <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this destination?\');">
+                            <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '">
+                                <button type="submit" name="deleteDestination" class="bg-red-500 text-white font-bold px-4 py-2 rounded-lg shadow-sm hover:bg-red-600 transition cursor-pointer">
+                                    Delete destination
+                                </button>
+                        </form>
+                    
+                ');
+
+                echo ('</div>');
+                    
+                echo ('</article>');              
+            }
+        ?>
+        </div>
+        </main>
+        <footer class="mt-10 border-t border-travel-200">
+                <div class="max-w-7xl mx-auto px-4 py-6">
+                    <p class="text-sm text-travel-700">© 2026 Hella Haraszti-Szabo. All rights reserved.</p>
+                </div>
+        </footer>
     </body>
 </html>
