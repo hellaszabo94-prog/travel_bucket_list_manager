@@ -28,7 +28,7 @@ $userID = (int) $_SESSION["userID"];
 // gets the selected destination ID
 if (!isset($_POST["destinationID"])) {
 
-    $msg = '<p class="error">Destination ID is missing.</p>';
+    $msg = '<p cclass="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">Destination ID is missing.</p>';
 
 } else {
 	
@@ -55,7 +55,7 @@ if (!isset($_POST["destinationID"])) {
 
 	if ($destination === null) {
 
-		$msg = '<p class="error">Destination not found.</p>';
+		$msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">Destination not found.</p>';
 
 	/*DESTINATION CHECK*/
 
@@ -100,13 +100,13 @@ if (!isset($_POST["destinationID"])) {
                 		unlink($fileSystemPath);
             		}
 
-				$msg ='<p class="success">Image deleted successfully.</p>';	
+				$msg ='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800">Image deleted successfully.</p>';	
 
 				$existingResult = null;
 
 			}else {
 
-            	$msg ='<p class="error">The image could not be deleted.</p>';
+            	$msg ='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The image could not be deleted.</p>';
         	}
 		}
 		/* DELETE IMAGE */
@@ -123,7 +123,7 @@ if (!isset($_POST["destinationID"])) {
 
 			if ($picture["size"] > $maxFileSize) {
 
-				$msg ='<p class="error">The image must not be larger than 4 MB.</p>';
+				$msg ='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The image must not be larger than 4 MB.</p>';
 			} else {
 
 				// determines the real MIME type of the uploaded file
@@ -180,7 +180,7 @@ if (!isset($_POST["destinationID"])) {
 
 							if ($imageOk) {
 
-								$msg = '<p class="success">Image uploaded successfully.</p>';
+								$msg = '<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800">Image uploaded successfully.</p>';
 
 								// creates the image object for the current page without running another SELECT query
 								$existingResult = new stdClass();
@@ -191,7 +191,7 @@ if (!isset($_POST["destinationID"])) {
 
 								unlink($fileSystemPath);
 
-								$msg = '<p class="error">The image could not be saved.</p>';
+								$msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The image could not be saved.</p>';
 								
 							}
 						
@@ -221,7 +221,7 @@ if (!isset($_POST["destinationID"])) {
 
 								}
 
-								$msg ='<p class="success"> Image changed successfully.</p>';
+								$msg ='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800"> Image changed successfully.</p>';
 
 								$existingResult->ImagePath = $imagePath;
 
@@ -230,24 +230,24 @@ if (!isset($_POST["destinationID"])) {
 								// removes the new image if upload not possible
 								unlink($fileSystemPath);
 
-								$msg ='<p class="error">The image could not be changed.</p>';
+								$msg ='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The image could not be changed.</p>';
 							}
 						}	
 
 					}else {
 
-						$msg = '<p class="error">The image could not be uploaded.</p>';
+						$msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">The image could not be uploaded.</p>';
 					
 					}
 				}else {
 
-					$msg = '<p class="error">This image type is not allowed.</p>';
+					$msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">This image type is not allowed.</p>';
 
 				} 
 			}	  
 		}else {
 
-			$msg = '<p class="error">Image upload failed.</p>';
+			$msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">Image upload failed.</p>';
 
 		}
 	}
@@ -264,6 +264,7 @@ if (!isset($_POST["destinationID"])) {
 		<link rel="stylesheet" href="css/tailwind.css">
 		<link rel="stylesheet" href="css/stylesheet.css">
 		<script src="js/navigation.js"></script>
+		<script src="js/upload-image.js" defer></script>
 	</head>
 	<body class="bg-travel-50 text-travel-950 min-h-screen">
 		<header class="bg-white border-b border-travel-100 shadow-sm">
@@ -286,53 +287,53 @@ if (!isset($_POST["destinationID"])) {
 			<section class="bg-white rounded-xl border border-travel-100 shadow-sm p-6">
 				<h1 class="font-display text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-200 bg-clip-text text-transparent">Manage destination image</h1> 
 				<p class="mt-2 text-travel-700">Upload, replace or remove the image for your destination.</p>
-			</section> 
+			 
 				<?php 
 				
 				echo($msg);
 
 				if (isset($destination) && $destination !== null) {
 
-				echo (  "<h3>" . htmlspecialchars($destination->DestinationName, ENT_QUOTES, "UTF-8" ) . "</h3>" );
+				echo (  "<h3 class='my-6 font-display text-2xl font-bold text-travel-900'>" . htmlspecialchars($destination->DestinationName, ENT_QUOTES, "UTF-8" ) . "</h3>" );
 
 				}		
 				
 				
 				
 				?>
-		<form method="post" enctype="multipart/form-data">
-			<input type="hidden" name="destinationID" value=" <?= (int) $destination->IDDestination ?>">
-			<label for="destinationImage">Choose an image:
-                <input type="file" id="destinationImage" name="destinationImage" required>
-			</label>
-			<button type="submit" name="uploadImage" >
-				<?php 
-					if ($existingResult === null) {
-        				echo ("Upload image");
-    				} else {
-        				echo ("Update image");
-   					}
-                 ?>
-                </button>
-		</form>
-		<a href="my_destinations.php">Back to My Destinations</a>
+			<div class="mt-6">
+				<form method="post" enctype="multipart/form-data" class="flex flex-col gap-3 md:flex-row md:items-center">
+					<input type="hidden" name="destinationID" value=" <?= (int) $destination->IDDestination ?>">
+					<label for="destinationImage" class="inline-block cursor-pointer rounded-lg bg-travel-100 px-4 py-2 font-bold text-travel-800 hover:bg-travel-200 transition">Choose image</label>
+					<input type="file" id="destinationImage" name="destinationImage" class="hidden" required>
+					<p id="fileName" class="text-sm text-travel-700 md:flex-1">No file selected</p>
+					<button type="submit" name="uploadImage" class="bg-travel-800 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:ring-4 hover:ring-travel-500/40 transition-all duration-200 cursor-pointer" >
+						<?php 
+							if ($existingResult === null) {
+								echo ("Upload image");
+							} else {
+								echo ("Update image");
+							}
+						?>
+						</button>
+				</form>
+			</div>	
+	
 		<?php 
 			if (isset($existingResult) && $existingResult !== null){
-				echo("<p>This destination already has an image:</p>");
-				echo('<img src="' . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . '" class="destinationImage">');
+				echo('<p class="my-3 text-md font-medium text-travel-700">This destination already has an image:</p>');
+				echo('<img src="' . htmlspecialchars($existingResult->ImagePath, ENT_QUOTES, "UTF-8") . '" alt="Current destination image" class="mt-6 w-full h-64 object-cover rounded-xl border-3 border-travel-600 md:max-w-180 md:h-100 md:mx-auto">');
 				echo('
                     <form method="post" onsubmit="return confirm(\'Are you sure you want to delete this image?\');">
                         <input type="hidden" name="destinationID" value="' . $destination->IDDestination . '" >
-                            <button type="submit" name="deleteImage">
-                                Delete image
-                            </button>
+                            <button type="submit" name="deleteImage" class="mt-4 bg-red-600 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm hover:bg-red-700 transition cursor-pointer">Delete image</button>
                     </form>
                 ');
 			}
 			
-			
-			
 		?>
+		<a href="my_destinations.php" class="mt-6 inline-block rounded-lg border border-travel-300 px-4 py-2 font-bold text-travel-800 hover:bg-travel-100 transition">Back to My Destinations</a>
+		</section> 
 		</main>
         <footer class="mt-10 border-t border-travel-200">
             <div class="max-w-7xl mx-auto px-4 py-6">
