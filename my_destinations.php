@@ -247,7 +247,7 @@ if ($destinationResult->num_rows === 0) {
         <link rel="stylesheet" href="css/stylesheet.css">
         <script src="js/navigation.js"></script>
     </head>
-    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-100 text-travel-950">
+    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-400 text-travel-950">
          <header class="bg-white border-b border-travel-100 shadow-sm">
             <nav id="mobile" class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center gap-4 md:gap-8">
                 <img src="logo/logo.png" alt="Travel Bucket List Manager logo" class="w-36 md:w-auto md:h-12 self-start md:self-auto">

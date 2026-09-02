@@ -54,7 +54,7 @@ if(isset($_POST["logButton"])>0){
             exit;
     }
     else{
-        $msg='<p class="error">Invalid email or password.</p>';
+        $msg='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">Invalid email or password.</p>';
     }
               
 }
@@ -70,7 +70,7 @@ if(isset($_POST["logButton"])>0){
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-100 text-travel-950">
+    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-400 text-travel-950">
         <main class="min-h-screen flex items-center justify-center px-4 py-8">
             <section class="w-full max-w-md rounded-xl border border-travel-100 bg-white p-6 shadow-sm">
                 <h1 class="font-display text-center text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-500 bg-clip-text text-transparent">Travel Bucket List Manager</h1>
