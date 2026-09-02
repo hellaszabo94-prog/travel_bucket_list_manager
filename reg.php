@@ -75,30 +75,22 @@ if(count($_POST)>0){
                 // display a confirmation message after successful registration
 
                 if($ok){
-                    $msg='<p class="success"> Thank you! You are registered. Now try to log in.</p>';
+                    $msg='<p class="mt-4 rounded-lg border border-travel-200 bg-travel-50 px-4 py-3 text-travel-800"> Thank you! You are registered. Now try to log in.</p>';
                 }
             }
             else{
-                $msg='<p class="error"> Password is too short.</p>';
+                $msg='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700"> Password is too short.</p>';
             }
         }
         else{
-            $msg='<p class="error"> Passwords do not match.</p>';
+            $msg='<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700"> Passwords do not match.</p>';
         } 
     }   
     else {
-        $msg = '<p class="error">This email address is already registered. Please log in.</p>';
+        $msg = '<p class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">This email address is already registered. Please log in.</p>';
     }    
 }
 
-// log in buttton further on the log.php
-
-
-if(isset($_POST["logButton"])){
-    
-    header("Location: index.php");
-
-}
 
 ?>
 <!doctype html>
@@ -119,33 +111,49 @@ if(isset($_POST["logButton"])){
                 <?php echo($msg);?>
                 <form method="post">
                     <fieldset>
-                        <label>
-                            Email adresse:
-                            <input type="email" name="E">
-                        </label>
-                        <label>
-                            Password :
-                            <input type="password" name="PWD">
-                        </label>
-                        <label>
-                            Password 2:
-                            <input type="password" name="PWD2">
-                        </label>
-                        <label>
-                            First name:
-                            <input type="text" name="FirstN">
-                        </label>
-                        <label>
-                            Last name:
-                            <input type="text" name="LastN" >
-                        </label>
-                        <label>
-                            Birth date:
-                            <input type="date" name="Birth">
-                        </label>
+                        <div class="mt-4">
+                            <label class="block font-display font-bold text-travel-800">
+                                Email address:
+                                <input type="email" name="E" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                            </label>
+                        </div>
+                        <div class="mt-4">              
+                            <label class="block font-display font-bold text-travel-800">
+                                Password :
+                                <input type="password" name="PWD" name="password" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                            </label>
+                        </div>  
+                        <div class="mt-4">      
+                            <label class="block font-display font-bold text-travel-800">
+                                Confirm password:
+                                <input type="password" name="PWD2" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                            </label>
+                        </div>     
+                        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2"> 
+                            <div>  
+                                <label class="block font-display  font-bold text-travel-800">
+                                    First name:
+                                    <input type="text" name="FirstN" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                                </label>
+                            </div>     
+                            <div>    
+                                <label class="block font-display  font-bold text-travel-800">
+                                    Last name:
+                                    <input type="text" name="LastN" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                                </label>
+                            </div>     
+                        </div>
+                        <div class="mt-4">         
+                            <label class="block font-bold text-travel-800">
+                                Birth date:
+                                <input type="date" name="Birth" class="mt-2 w-full rounded-lg border border-travel-200 px-3 py-2.5 focus:outline-none focus:border-travel-700 focus:ring-2 focus:ring-travel-700/30" required>
+                            </label>
+                        </div>        
                     </fieldset>
-                    <input type="submit" value="Log in" name="logButton">
-                    <input type="submit" value="Sign up" name="regButton">
+                    <input type="submit" value="Create account" name="regButton"  class="mt-6 w-full rounded-lg bg-travel-800 px-5 py-2.5 font-bold text-white shadow-sm hover:ring-4 hover:ring-travel-500/40 transition-all duration-200 cursor-pointer">
+                    <p class="mt-6 text-center text-sm text-travel-700">Already have an account?
+                        <a href="index.php" class="font-bold text-travel-800 hover:text-travel-600 underline-offset-4 hover:underline transition">Log in</a>
+                    </p>
                 </form>
             </section>
         </main>
