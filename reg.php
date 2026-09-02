@@ -107,41 +107,47 @@ if(isset($_POST["logButton"])){
         <title>Sing up</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/tailwind.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     </head>
-    <body>
-    <h1>Travel Bucket List Manager</h1>
-    <h2>Sing up</h2>
-    <?php echo($msg);?>
-    <form method="post">
-        <fieldset>
-            <label>
-                Email adresse:
-                <input type="email" name="E">
-            </label>
-            <label>
-                Password :
-                <input type="password" name="PWD">
-            </label>
-            <label>
-                Password 2:
-                <input type="password" name="PWD2">
-            </label>
-            <label>
-                First name:
-                <input type="text" name="FirstN">
-            </label>
-            <label>
-                Last name:
-                <input type="text" name="LastN" >
-            </label>
-            <label>
-                Birth date:
-                <input type="date" name="Birth">
-            </label>
-        </fieldset>
-        <input type="submit" value="Log in" name="logButton">
-        <input type="submit" value="Sign up" name="regButton">
-    </form>
+    <body class="min-h-screen bg-gradient-to-br from-travel-50 via-white to-travel-100 text-travel-950">
+        <main class="min-h-screen flex items-center justify-center px-4 py-8">
+            <section class="w-full max-w-lg rounded-xl border border-travel-100 bg-white p-6 shadow-sm">  
+                <h1 class="font-display text-center text-3xl font-bold bg-gradient-to-r from-travel-900 to-travel-500 bg-clip-text text-transparent">Travel Bucket List Manager</h1>
+                <h2 class="mt-6 text-center font-display text-3xl font-bold text-travel-900">Create your account</h2>
+                <p class="mt-2 text-center text-travel-700">Create an account to start building your personal travel bucket list.</p>
+                <?php echo($msg);?>
+                <form method="post">
+                    <fieldset>
+                        <label>
+                            Email adresse:
+                            <input type="email" name="E">
+                        </label>
+                        <label>
+                            Password :
+                            <input type="password" name="PWD">
+                        </label>
+                        <label>
+                            Password 2:
+                            <input type="password" name="PWD2">
+                        </label>
+                        <label>
+                            First name:
+                            <input type="text" name="FirstN">
+                        </label>
+                        <label>
+                            Last name:
+                            <input type="text" name="LastN" >
+                        </label>
+                        <label>
+                            Birth date:
+                            <input type="date" name="Birth">
+                        </label>
+                    </fieldset>
+                    <input type="submit" value="Log in" name="logButton">
+                    <input type="submit" value="Sign up" name="regButton">
+                </form>
+            </section>
+        </main>
     </body>
 </html>
