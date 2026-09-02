@@ -43,7 +43,23 @@ The project was created as a practice project for my **Full-Stack Web Developmen
 * Custom Tailwind CSS color palette
 * Custom Nunito typography
 
-<img width="1378" height="1105" alt="Képernyőkép 2026-09-02 173520" src="https://github.com/user-attachments/assets/f6283273-85d5-428c-a499-13e11eac3f30" />
+## Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### My Destinations
+
+![My Destinations](screenshots/my-destinations.png)
+
+### Mobile View
+
+![Mobile View](screenshots/mobile-view.png)
 
 
 ## Technologies
