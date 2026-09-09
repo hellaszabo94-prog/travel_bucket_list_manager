@@ -91,7 +91,17 @@ if(isset($_POST["logButton"])>0){
                         <p class="mt-6 text-center text-sm text-travel-700">Don't have an account?
                             <a href="reg.php"class="font-bold text-travel-800 hover:text-travel-600 underline-offset-4 hover:underline transition">Create an account</a>
                     </form>
-                </div>    
+                </div>
+                <div class="mt-4 rounded-lg border border-travel-200 bg-travel-50 p-4">
+                    <p class="font-display font-bold text-travel-900">Demo account</p>
+                    <p class="mt-2 text-sm text-travel-700">You can use the following account to explore the application without registration.</p>
+                    <p class="mt-3 text-sm text-travel-800">
+                        <strong>Email:</strong> testdemo@travelmanager.com
+                    </p>
+                    <p class="text-sm text-travel-800">
+                    <strong>Password:</strong> testdemo12345
+                    </p>
+                </div>   
             </section>
     </body>
 </html>
